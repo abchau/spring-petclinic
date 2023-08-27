@@ -1,0 +1,61 @@
+<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+
+<button hx-get="https://v2.jokeapi.dev/joke/Any?format=txt&safe-mode" hx-swap="beforeend" hx-target="#list">
+  Htmx
+</button>
+<br/>
+<div id="list">Htmx: </div>
+
+<hr/>
+
+<script
+  src="https://code.jquery.com/jquery-3.7.0.min.js"
+  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+  crossorigin="anonymous"></script>
+
+<button jquery-get="https://v2.jokeapi.dev/joke/Any?format=txt&safe-mode" jquery-swap="beforeend" jquery-target="#list2">
+  jQuery Click Me
+</button>
+<br/>
+<div id="list2">jQuery: </div>
+
+<script>
+  $('[jquery-get]').on('click', function(e){
+  var $ele = $(e.target);
+  var getUrl = $ele.attr('jquery-get');
+  var targetSelector = $ele.attr('jquery-target');
+  var swapStrategy = $ele.attr('jquery-swap');
+  
+  $.get(getUrl, function(data) {
+    $(targetSelector).append(data);
+  });
+});
+
+</script>
+
+<hr/>
+
+
+<button vanilla-get="https://v2.jokeapi.dev/joke/Any?format=txt&safe-mode" vanilla-swap="beforeend" vanilla-target="#list3">
+  Vanilla Click Me
+</button>
+<br/>
+<div id="list3">Vanilla: </div>
+
+<script>
+var matches = document.querySelectorAll('[vanilla-get]');
+matches.forEach(function(match){
+  match.addEventListener('click', (e) => {
+    var ele = e.target;
+    var getUrl = ele.getAttribute('vanilla-get');
+    var targetSelector = ele.getAttribute('vanilla-target');
+    var swapStrategy = ele.getAttribute('vanilla-swap');
+    fetch(getUrl)
+      .then((response) => response.text())
+      .then((text) => {
+        document.querySelector(targetSelector)
+          .insertAdjacentHTML(swapStrategy, text);
+      });
+  }); 
+});
+</script>

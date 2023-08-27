@@ -21,10 +21,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.vet.domain.Vet;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+
+import org.springframework.samples.petclinic.vet.domain.Vet;
 
 /**
  * Repository class for <code>Vet</code> jpa entity All method names are compliant with
@@ -43,7 +43,6 @@ public interface VetRepository extends Repository<Vet, Integer> {
 	 * Retrieve all <code>Vet</code>s from the data store.
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
-	@Transactional(readOnly = true)
 	@EntityGraph(attributePaths = { "specialties" })
 	@Cacheable("vets")
 	Collection<Vet> findAll() throws DataAccessException;
@@ -54,7 +53,6 @@ public interface VetRepository extends Repository<Vet, Integer> {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	@Transactional(readOnly = true)
 	@EntityGraph(attributePaths = { "specialties" })
 	@Cacheable("vets")
 	Page<Vet> findAll(Pageable pageable) throws DataAccessException;

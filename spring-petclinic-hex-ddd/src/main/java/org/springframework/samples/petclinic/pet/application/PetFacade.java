@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.pet.domain.CreatePetUseCase;
-import org.springframework.samples.petclinic.pet.domain.Pet;
-import org.springframework.samples.petclinic.pet.domain.PetType;
-import org.springframework.samples.petclinic.pet.domain.ShowPetUseCase;
-import org.springframework.samples.petclinic.pet.domain.UpdatePetUseCase;
+import org.springframework.samples.petclinic.pet.domain.pet.CreatePetUseCase;
+import org.springframework.samples.petclinic.pet.domain.pet.Pet;
+import org.springframework.samples.petclinic.pet.domain.pet.PetType;
+import org.springframework.samples.petclinic.pet.domain.pet.ShowPetUseCase;
+import org.springframework.samples.petclinic.pet.domain.pet.UpdatePetUseCase;
 import org.springframework.stereotype.Service;
 
 // Application Service

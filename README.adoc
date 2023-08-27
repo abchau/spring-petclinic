@@ -1,0 +1,162 @@
+= Examples based on Spring PetClinic Sample Application
+
+== Origin
+
+Derived from link:https://github.com/spring-projects/spring-petclinic[Spring PetClinic Sample Application]
+
+== Motiviation
+
+* not intend to merge any changes here back to the original repo
+* not intend to demostrates how to write tests
+* not intend to provide a silver bullet
+* just to provide examples on different ways of doing things so people can explore which strategy to choose under different context
+
+== Philosophy
+
+* not changing databases, SQL, HTML, CSS, etc
+* not introducing new library like lombok
+* all example projects should behave the same (except original)
+* commit history can be completely ignored. Only the latest version is relevant
+* the whole thing of a domain package or sub package of a domain package is a domain model
+* aggregate is a state machine that the only behaviour allowed in a aggregate is altering it's own internal state
+
+== Baseline changes compared to original code
+
+* removed gradle
+* removed all tests as original tests are no longer relevant
+* removed all Active Record style codes
+* removed all Hibernate Inheritance Mapping to reduce distraction
+* chnaged all fetching strategies to LAZY
+* removed all cascade strategies
+* removed uses of `WebDataBinder`, `Validator`, and `@ModelAttribute` annotation at method level
+* applied PRG pattern
+* applied basic error messages
+* applied packages to apply some level of layering
+* applied Spring Data Repository for each jpa entity
+
+== Project Structures
+
+[plantuml]
+----
+include::test.puml[]
+----
+
+[cols="2,4,1,1,1,1,1,1", width="100%"]
+|===
+
+.2+h|Project
+.2+h|Summary
+3+h|Separation of Concern
+2+h|dependency inversion
+.2+h|Module
+
+h|input model
+h|domain model
+h|output model
+h|input
+h|output
+
+|link:spring-petclinic-org[]
+|Original state before fork
+|
+|
+|
+|
+|
+|
+
+|link:spring-petclinic-3tier[]
+|Baseline traditional 3-tier example
+|
+|
+|Y
+|
+|
+|
+
+|link:spring-petclinic-3tier-2[]
+|3-tier + explicit input model
+|Y
+|
+|Y
+|
+|
+|
+
+|link:spring-petclinic-3tier-3[]
+|3-tier + explicit input model, domain model, output model
+|Y
+|Y
+|Y
+|
+|
+|
+
+|link:spring-petclinic-3tier-4[]
+|Baseline traditional 3-tier example
+|Y
+|Y
+|Y
+|
+|Y
+|
+
+|link:spring-petclinic-ddd[]
+|DDD example
+|Y
+|Y
+|Y
+|Y
+|Y
+|
+
+|link:spring-petclinic-hex[]
+a|Hexagonal example
+
+|?
+|Y
+|Y
+|Y
+|Y
+|
+
+|link:spring-petclinic-hex-ddd[]
+a|Hexagonal DDD example
+
+Some parts follow HEX, some others follow DDD. 
+
+|Y
+|Y
+|Y
+|Y
+|Y
+|
+
+|link:spring-petclinic-hex-ddd-cqrs[]
+a|
+|Y
+|Y
+|Y
+|Y
+|Y
+|
+
+|link:spring-petclinic-hex-ddd-eda[]
+a|
+|Y
+|Y
+|Y
+|Y
+|Y
+|
+
+|link:spring-petclinic-hex-ddd-9m[]
+a|Java 9 Module
+|Y
+|Y
+|Y
+|Y
+|Y
+|Y
+
+|===

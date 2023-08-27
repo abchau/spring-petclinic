@@ -27,7 +27,21 @@
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
     <spring-format.version>0.0.38</spring-format.version>
 
+	<jmolecules.version>1.7.0</jmolecules.version>
+	<spring-modulith.version>0.6.0</spring-modulith.version>
   </properties>
+
+  <dependencyManagement>
+	<dependencies>
+		<dependency>
+		<groupId>org.springframework.experimental</groupId>
+		<artifactId>spring-modulith-bom</artifactId>
+		<version>${spring-modulith.version}</version>
+		<scope>import</scope>
+		<type>pom</type>
+		</dependency>
+	</dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <!-- Spring and Spring Boot dependencies -->
@@ -112,11 +126,23 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+
+		<dependency>
+			<groupId>org.jmolecules</groupId>
+			<artifactId>jmolecules-layered-architecture</artifactId>
+			<version>${jmolecules.version}</version>
+		</dependency>
+		
+    <dependency>
+      <groupId>org.springframework.experimental</groupId>
+      <artifactId>spring-modulith-starter-test</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
-      <plugin>
+      <!-- <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
         <version>${spring-format.version}</version>
@@ -128,7 +154,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>

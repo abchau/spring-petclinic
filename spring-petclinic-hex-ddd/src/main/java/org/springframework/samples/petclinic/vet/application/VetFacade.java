@@ -2,9 +2,9 @@ package org.springframework.samples.petclinic.vet.application;
 
 import java.util.List;
 
-import org.springframework.samples.petclinic.vet.domain.ShowVetUseCase;
-import org.springframework.samples.petclinic.vet.domain.Vet;
-import org.springframework.samples.petclinic.vet.domain.VetRepository.PaginatedVet;
+import org.springframework.samples.petclinic.vet.domain.vet.ShowVetUseCase;
+import org.springframework.samples.petclinic.vet.domain.vet.Vet;
+import org.springframework.samples.petclinic.vet.domain.vet.Vet.PaginatedVet;
 import org.springframework.stereotype.Service;
 
 @Service

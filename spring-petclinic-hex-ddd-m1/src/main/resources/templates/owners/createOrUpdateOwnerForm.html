@@ -1,0 +1,34 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
+
+<body>
+
+  <h2>Owner</h2>
+  <form th:object="${form}" class="form-horizontal" id="add-owner-form" method="post">
+    <ul class="alert-danger" th:if="${errors != null}">
+      <li th:each="error : ${errors}" th:text="${error.field + ': ' + error.defaultMessage}"></li>
+    </ul>
+    <input type="hidden" name="id" th:if="${mode == 'edit'}" th:value="${form.id}" />
+    <div class="form-group has-feedback">
+      <input
+        th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Address', 'address', 'text')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('City', 'city', 'text')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Telephone', 'telephone', 'text')}" />
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button
+          th:with="text=${mode == 'new'} ? 'Add Owner' : 'Update Owner'"
+          class="btn btn-primary" type="submit" th:text="${text}">Add
+          Owner</button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
