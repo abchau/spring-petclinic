@@ -18,8 +18,8 @@ package org.springframework.samples.petclinic.vet.userinterface.web;
 import java.util.List;
 
 import org.springframework.samples.petclinic.vet.application.VetFacade;
-import org.springframework.samples.petclinic.vet.domain.vet.Vet;
-import org.springframework.samples.petclinic.vet.domain.vet.Vet.PaginatedVet;
+import org.springframework.samples.petclinic.vet.domain.Vet;
+import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

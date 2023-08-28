@@ -7,7 +7,7 @@ import org.springframework.samples.petclinic.pet.domain.Visit;
  *
  * @author github.com/abchau
  */
-public interface SaveVisitUseCase {
+public interface SaveVisitPort{
 
 	public Visit create(Visit visit);
 

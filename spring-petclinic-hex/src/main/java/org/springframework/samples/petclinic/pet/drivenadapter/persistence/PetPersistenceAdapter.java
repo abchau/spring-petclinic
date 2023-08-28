@@ -3,8 +3,8 @@ package org.springframework.samples.petclinic.pet.drivenadapter.persistence;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.samples.petclinic.pet.application.drivenport.LoadPetUseCase;
-import org.springframework.samples.petclinic.pet.application.drivenport.SavePetUseCase;
+import org.springframework.samples.petclinic.pet.application.drivenport.LoadPetPort;
+import org.springframework.samples.petclinic.pet.application.drivenport.SavePetPort;
 import org.springframework.samples.petclinic.pet.domain.Pet;
 import org.springframework.samples.petclinic.pet.domain.PetType;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author github.com/abchau
  */
 @Service
-public class PetPersistenceAdapter implements LoadPetUseCase, SavePetUseCase {
+public class PetPersistenceAdapter implements LoadPetPort, SavePetPort {
 
 	private final PetEntityRepository petEntityRepository;
 

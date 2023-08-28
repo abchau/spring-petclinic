@@ -1,6 +1,6 @@
 package org.springframework.samples.petclinic.vet.infrastructure.persistence;
 
-import org.springframework.samples.petclinic.vet.domain.vet.Specialty;
+import org.springframework.samples.petclinic.vet.domain.Specialty;
 
 class SpecialtyEntityTranslator {
 

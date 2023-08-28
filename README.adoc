@@ -4,27 +4,24 @@
 
 Derived from link:https://github.com/spring-projects/spring-petclinic[Spring PetClinic Sample Application]
 
-== Motiviation
+== Philosophy
 
 * not intend to merge any changes here back to the original repo
 * not intend to demostrates how to write tests
 * not intend to provide a silver bullet
-* just to provide examples on different ways of doing things so people can explore which strategy to choose under different context
-
-== Philosophy
-
+* only to provide examples on different ways of doing things so people can explore which strategy to choose under different context
 * not changing databases, SQL, HTML, CSS, etc
 * not introducing new library like lombok
 * all example projects should behave the same (except original)
+* minimize future maintenance effort
 * commit history can be completely ignored. Only the latest version is relevant
-* the whole thing of a domain package or sub package of a domain package is a domain model
-* aggregate is a state machine that the only behaviour allowed in a aggregate is altering it's own internal state
 
 == Baseline changes compared to original code
 
 * removed gradle
 * removed all tests as original tests are no longer relevant
 * removed all Active Record style codes
+* removed all check style
 * removed all Hibernate Inheritance Mapping to reduce distraction
 * chnaged all fetching strategies to LAZY
 * removed all cascade strategies
@@ -34,21 +31,20 @@ Derived from link:https://github.com/spring-projects/spring-petclinic[Spring Pet
 * applied packages to apply some level of layering
 * applied Spring Data Repository for each jpa entity
 
+== How to use
+
+* download the repo
+* compare them
+
 == Project Structures
 
-[plantuml]
-----
-include::test.puml[]
-----
-
-[cols="2,4,1,1,1,1,1,1", width="100%"]
+[cols="2,4,1,1,1,1,1", width="100%"]
 |===
 
 .2+h|Project
 .2+h|Summary
 3+h|Separation of Concern
 2+h|dependency inversion
-.2+h|Module
 
 h|input model
 h|domain model
@@ -63,40 +59,11 @@ h|output
 |
 |
 |
-|
 
 |link:spring-petclinic-3tier[]
 |Baseline traditional 3-tier example
 |
 |
-|Y
-|
-|
-|
-
-|link:spring-petclinic-3tier-2[]
-|3-tier + explicit input model
-|Y
-|
-|Y
-|
-|
-|
-
-|link:spring-petclinic-3tier-3[]
-|3-tier + explicit input model, domain model, output model
-|Y
-|Y
-|Y
-|
-|
-|
-
-|link:spring-petclinic-3tier-4[]
-|Baseline traditional 3-tier example
-|Y
-|Y
-|Y
 |
 |Y
 |
@@ -108,51 +75,10 @@ h|output
 |Y
 |Y
 |Y
-|
 
 |link:spring-petclinic-hex[]
 a|Hexagonal example
 
-|?
-|Y
-|Y
-|Y
-|Y
-|
-
-|link:spring-petclinic-hex-ddd[]
-a|Hexagonal DDD example
-
-Some parts follow HEX, some others follow DDD. 
-
-|Y
-|Y
-|Y
-|Y
-|Y
-|
-
-|link:spring-petclinic-hex-ddd-cqrs[]
-a|
-|Y
-|Y
-|Y
-|Y
-|Y
-|
-
-|link:spring-petclinic-hex-ddd-eda[]
-a|
-|Y
-|Y
-|Y
-|Y
-|Y
-|
-
-|link:spring-petclinic-hex-ddd-9m[]
-a|Java 9 Module
-|Y
 |Y
 |Y
 |Y
@@ -160,3 +86,9 @@ a|Java 9 Module
 |Y
 
 |===
+
+[Notes]
+====
+* Everything in a domain package, including sub packages, together is a domain model. A object like the `Pet` object alone is NOT the Domain Model but an object inside a Domain Model
+* An aggregate is a state machine that the only kind of behaviours allowed in an aggregate is altering it's own internal state
+====

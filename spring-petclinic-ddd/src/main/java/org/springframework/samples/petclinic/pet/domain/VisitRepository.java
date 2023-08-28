@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * A DDD Repository (not Spring Data Repository)
+ * A DDD Domain Service
  * 
  * @author github.com/abchau
  */

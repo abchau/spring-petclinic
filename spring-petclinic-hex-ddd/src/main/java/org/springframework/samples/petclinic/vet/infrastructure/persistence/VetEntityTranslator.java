@@ -2,7 +2,7 @@ package org.springframework.samples.petclinic.vet.infrastructure.persistence;
 
 import java.util.stream.Collectors;
 
-import org.springframework.samples.petclinic.vet.domain.vet.Vet;
+import org.springframework.samples.petclinic.vet.domain.Vet;
 
 class VetEntityTranslator {
 

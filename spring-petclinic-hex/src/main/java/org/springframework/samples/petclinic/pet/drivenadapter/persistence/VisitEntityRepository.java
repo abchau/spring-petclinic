@@ -20,7 +20,6 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository class for <code>Vet</code> jpa entity All method names are compliant with

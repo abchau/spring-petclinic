@@ -22,8 +22,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.pet.domain.PetType;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * Repository class for <code>PetTypeEntity</code> jpa entity All method names are
  * compliant with Spring Data naming conventions so this interface can easily be extended

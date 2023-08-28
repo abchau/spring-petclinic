@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author github.com/abchau
  */
 @Service
-public class OwnerPersistenceAdapter implements LoadOwnerPort, SaveOwnerUseCase {
+public class OwnerPersistenceAdapter implements LoadOwnerPort, SaveOwnerPort {
 
 	private final OwnerEntityRepository ownerEntityRepository;
 

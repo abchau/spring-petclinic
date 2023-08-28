@@ -1,3 +1,3 @@
-module org.springframework.samples.petclinic.pet.core {
-    exports org.springframework.samples.petclinic.pet.domain;
+module org.springframework.samples.petclinic.pet {
+    exports org.springframework.samples.petclinic.pet;
 }

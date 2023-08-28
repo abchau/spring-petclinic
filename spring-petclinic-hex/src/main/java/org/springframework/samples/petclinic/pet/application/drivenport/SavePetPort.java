@@ -7,7 +7,7 @@ import org.springframework.samples.petclinic.pet.domain.Pet;
  *
  * @author github.com/abchau
  */
-public interface SavePetUseCase {
+public interface SavePetPort {
 
 	public Pet create(Pet pet);
 

@@ -18,7 +18,6 @@ package org.springframework.samples.petclinic.pet.drivenadapter.persistence;
 import java.util.List;
 
 import org.springframework.data.repository.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository class for <code>PetTypeEntity</code> entity objects All method names are

@@ -145,8 +145,7 @@ class OwnerController {
 			return "redirect:/owners/{id}/edit";
 		}
 
-		// demostrates doing extra validation by comparing parh variable and form
-		// value. Do it based on your preference. Not necessary to follow
+		// demostrates web layer validation
 		if (form.getId() != id) {
 			redirectAttributes.addFlashAttribute("form", form);
 			FieldError fieldError = new FieldError(Owner.class.getName(), "id", "gocha!");

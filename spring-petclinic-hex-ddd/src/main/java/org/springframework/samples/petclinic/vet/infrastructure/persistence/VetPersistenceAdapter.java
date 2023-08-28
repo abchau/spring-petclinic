@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.samples.petclinic.vet.domain.vet.Vet;
-import org.springframework.samples.petclinic.vet.domain.vet.Vet.PaginatedVet;
-import org.springframework.samples.petclinic.vet.domain.vet.LoadVetUseCase;
+import org.springframework.samples.petclinic.vet.domain.LoadVetPort;
+import org.springframework.samples.petclinic.vet.domain.Vet;
+import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * It can be a local transaction or remote RPC to other services, cloud services, etc
  */
 @Service
-class VetPersistenceAdapter implements LoadVetUseCase {
+class VetPersistenceAdapter implements LoadVetPort {
 
 	private final VetEntityRepository vetEntityRepository;
 

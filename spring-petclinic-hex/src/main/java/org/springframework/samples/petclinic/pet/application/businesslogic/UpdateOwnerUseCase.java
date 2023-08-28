@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 class UpdateOwnerUseCase implements UpdateOwnerPort {
 
-	private final SaveOwnerUseCase saveOwnerPort;
+	private final SaveOwnerPort saveOwnerPort;
 
 	@Autowired
-	public UpdateOwnerUseCase(SaveOwnerUseCase saveOwnerPort) {
+	public UpdateOwnerUseCase(SaveOwnerPort saveOwnerPort) {
 		this.saveOwnerPort = saveOwnerPort;
 	}
 

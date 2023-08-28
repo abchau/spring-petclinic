@@ -5,6 +5,7 @@
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic-ddd-9m</artifactId>
   <version>3.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -12,14 +13,12 @@
     <version>3.0.4</version>
   </parent>
 
-  <name>petclinic-ddd-9m</name>
+  <name>petclinic-ddd-jigsaw</name>
 
   <modules>
 	<module>spring-petclinic-pet-core</module>
-	<module>spring-petclinic-pet-api</module>
 	<module>spring-petclinic-vet-core</module>
-	<module>spring-petclinic-vet-api</module>
-	<module>spring-petclinic-web</module>
+	<module>spring-petclinic-webapp</module>
   </modules>
 
   <properties>
@@ -34,7 +33,6 @@
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
     <jacoco.version>0.8.8</jacoco.version>
-    <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
     <spring-format.version>0.0.38</spring-format.version>
 
   </properties>

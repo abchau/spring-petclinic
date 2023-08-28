@@ -2,26 +2,14 @@ package org.springframework.samples.petclinic.vet.application;
 
 import java.util.List;
 
-import org.springframework.samples.petclinic.vet.domain.vet.ShowVetUseCase;
-import org.springframework.samples.petclinic.vet.domain.vet.Vet;
-import org.springframework.samples.petclinic.vet.domain.vet.Vet.PaginatedVet;
-import org.springframework.stereotype.Service;
+import org.springframework.samples.petclinic.vet.domain.Vet;
+import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 
-@Service
-public class VetFacade {
+// API
+public interface VetFacade {
 
-	private final ShowVetUseCase showVetUseCase;
+	public List<Vet> findAll();
 
-	public VetFacade(ShowVetUseCase showVetUseCase) {
-		this.showVetUseCase = showVetUseCase;
-	}
-
-	public List<Vet> findAll() {
-		return showVetUseCase.findAll();
-	}
-
-	public PaginatedVet findPaginatedVet(int page) {
-		return showVetUseCase.findPaginatedVet(page);
-	}
+	public PaginatedVet findPaginatedVet(int page);
 
 }

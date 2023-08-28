@@ -9,7 +9,6 @@ import org.springframework.samples.petclinic.vet.domain.Vet;
 import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Component;
 
-// API
 @Component
 class ShowVetUseCase implements ShowVetPort {
 

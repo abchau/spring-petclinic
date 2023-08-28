@@ -1,3 +1,3 @@
-module org.springframework.samples.petclinic.vet.domain {
-    exports org.springframework.samples.petclinic.vet.domain;
+module org.springframework.samples.petclinic.vet {
+    exports org.springframework.samples.petclinic.vet;
 }
