@@ -43,7 +43,7 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
  */
 @Controller
 @RequestMapping("/owners/{ownerId}/pets")
-class PetController {
+/*final*/ class PetController {
 
 	private final PetFacade petFacade;
 

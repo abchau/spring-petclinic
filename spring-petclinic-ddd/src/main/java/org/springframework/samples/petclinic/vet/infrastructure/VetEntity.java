@@ -35,10 +35,11 @@ import jakarta.validation.constraints.NotEmpty;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Arjen Poutsma
+ * @author github.com/abchau
  */
 @Entity
 @Table(name = "vets")
-public class VetEntity {
+class VetEntity {
 
 	@Id
 	@Column(name = "id")

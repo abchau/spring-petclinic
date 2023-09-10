@@ -24,7 +24,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
  *
  * @author github.com/abchau
  */
-public sealed interface VetFacade permits VetFacadeImpl {
+public /*sealed*/ interface VetFacade /*permits VetFacadeImpl*/ {
 
 	public Collection<Vet> findAll();
 

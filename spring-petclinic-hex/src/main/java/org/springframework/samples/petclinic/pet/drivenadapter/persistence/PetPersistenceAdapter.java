@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author github.com/abchau
  */
 @Service
-public class PetPersistenceAdapter implements LoadPetPort, SavePetPort {
+/*final*/ class PetPersistenceAdapter implements LoadPetPort, SavePetPort {
 
 	private final PetEntityRepository petEntityRepository;
 

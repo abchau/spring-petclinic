@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * It can be a local transaction or remote RPC to other services, cloud services, etc
  */
 @Service
-public class VetPersistenceAdapter implements LoadVetPort {
+/*final*/ class VetPersistenceAdapter implements LoadVetPort {
 
 	private final VetEntityRepository vetEntityRepository;
 

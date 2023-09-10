@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-non-sealed class PetServiceImpl implements PetService {
+/*final*/ class PetServiceImpl implements PetService {
 
 	private final PetRepository petRepository;
 

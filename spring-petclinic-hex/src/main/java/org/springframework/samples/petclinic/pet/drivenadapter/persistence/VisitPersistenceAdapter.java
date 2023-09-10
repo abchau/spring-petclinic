@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author github.com/abchau
  */
 @Service
-public class VisitPersistenceAdapter implements LoadVisitPort, SaveVisitPort {
+/*final*/ class VisitPersistenceAdapter implements LoadVisitPort, SaveVisitPort {
 
 	private final VisitEntityRepository visitEntityRepository;
 

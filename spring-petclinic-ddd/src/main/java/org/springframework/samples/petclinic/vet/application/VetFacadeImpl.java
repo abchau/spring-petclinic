@@ -28,7 +28,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
  * @author github.com/abchau
  */
 @Service
-non-sealed class VetFacadeImpl implements VetFacade {
+/*final*/ class VetFacadeImpl implements VetFacade {
 
 	private final VetRepository vetRepository;
 

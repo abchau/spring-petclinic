@@ -25,7 +25,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
  * @author github.com/abchau
  */
 @Component
-non-sealed class VetServiceImpl implements VetService {
+/*final*/ class VetServiceImpl implements VetService {
 
 	private final VetRepository vetRepository;
 

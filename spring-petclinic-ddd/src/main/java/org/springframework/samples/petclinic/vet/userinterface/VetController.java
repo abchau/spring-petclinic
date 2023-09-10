@@ -38,7 +38,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
  * @author github.com/abchau
  */
 @Controller
-class VetController {
+/*final*/ class VetController {
 
 	private final VetFacade vetFacade;
 

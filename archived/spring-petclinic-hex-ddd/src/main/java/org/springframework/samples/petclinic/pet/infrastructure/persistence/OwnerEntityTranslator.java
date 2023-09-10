@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.samples.petclinic.pet.domain.owner.Owner;
 
 /**
- * Technology-specific anti-corruption layer
+ * Technology-specific translation
  *
  * @author github.com/abchau
  */

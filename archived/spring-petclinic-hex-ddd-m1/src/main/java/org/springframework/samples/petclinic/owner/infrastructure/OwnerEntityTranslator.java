@@ -6,7 +6,7 @@ import org.springframework.samples.petclinic.owner.domain.Owner;
 import org.springframework.samples.petclinic.pet.infrastructure.PetEntityTranslator;
 
 /**
- * Technology-specific anti-corruption layer
+ * Technology-specific translation
  *
  * @author github.com/abchau
  */

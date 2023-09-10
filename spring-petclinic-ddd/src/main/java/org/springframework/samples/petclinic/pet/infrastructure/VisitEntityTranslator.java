@@ -19,7 +19,7 @@ import org.springframework.samples.petclinic.pet.domain.Visit;
 
 final class VisitEntityTranslator {
 
-	public static Visit toDomainModel(VisitEntity visitEntity) {
+	static Visit toDomainModel(VisitEntity visitEntity) {
 		Visit visit = new Visit();
 		visit.setId(visitEntity.getId());
 		visit.setPetId(visitEntity.getPetId());
@@ -29,7 +29,7 @@ final class VisitEntityTranslator {
 		return visit;
 	}
 
-	public static VisitEntity toPersistenceModel(Visit visit) {
+	static VisitEntity toPersistenceModel(Visit visit) {
 		VisitEntity visitEntity = new VisitEntity();
 		visitEntity.setId(visit.getId());
 		visitEntity.setPetId(visit.getPetId());

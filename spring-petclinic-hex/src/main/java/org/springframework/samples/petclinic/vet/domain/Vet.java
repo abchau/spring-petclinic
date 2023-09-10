@@ -26,7 +26,7 @@ import java.util.List;
  * @author Sam Brannen
  * @author Arjen Poutsma
  */
-public class Vet {
+public final class Vet {
 
 	private Integer id;
 

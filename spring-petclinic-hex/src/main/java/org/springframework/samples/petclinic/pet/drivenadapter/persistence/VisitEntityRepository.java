@@ -29,7 +29,7 @@ import org.springframework.data.repository.Repository;
  *
  * @author github.com/abchau
  */
-public interface VisitEntityRepository extends Repository<VisitEntity, Integer> {
+interface VisitEntityRepository extends Repository<VisitEntity, Integer> {
 
 	/**
 	 * Save an {@link VisitEntity} to the data store, either inserting or updating it.

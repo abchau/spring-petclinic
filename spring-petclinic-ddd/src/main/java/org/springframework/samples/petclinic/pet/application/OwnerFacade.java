@@ -23,7 +23,7 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
  *
  * @author github.com/abchau
  */
-public sealed interface OwnerFacade permits OwnerFacadeImpl {
+public /*sealed*/ interface OwnerFacade /*permits OwnerFacadeImpl*/ {
 
 	public Owner createOwner(Owner newOwner);
 

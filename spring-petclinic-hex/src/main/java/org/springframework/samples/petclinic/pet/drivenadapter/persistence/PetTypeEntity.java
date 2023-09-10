@@ -27,7 +27,7 @@ import jakarta.persistence.Id;
  */
 @Entity
 @Table(name = "types")
-public class PetTypeEntity {
+/*final*/ class PetTypeEntity {
 
 	@Id
 	@Column(name = "id")

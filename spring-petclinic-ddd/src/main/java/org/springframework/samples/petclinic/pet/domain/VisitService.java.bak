@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author github.com/abchau
  */
-public sealed interface VisitService permits VisitServiceImpl {
+public /*sealed*/ interface VisitService /*permits VisitServiceImpl*/ {
 
 	public Visit addVisit(Visit newVisit);
 

@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author github.com/abchau
  */
-public class Pet {
+public final class Pet {
 
 	private Integer id;
 

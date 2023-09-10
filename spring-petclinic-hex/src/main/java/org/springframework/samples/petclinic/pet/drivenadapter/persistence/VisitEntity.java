@@ -38,7 +38,7 @@ import jakarta.validation.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "visits")
-public class VisitEntity {
+/*final*/ class VisitEntity {
 
 	@Id
 	@Column(name = "id")

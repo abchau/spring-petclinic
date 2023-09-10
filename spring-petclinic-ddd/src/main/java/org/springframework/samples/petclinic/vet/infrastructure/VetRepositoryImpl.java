@@ -29,10 +29,12 @@ import org.springframework.samples.petclinic.vet.domain.VetRepository;
 import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 
 /**
- * It can be a local transaction or remote RPC to other services, cloud services, etc
+ * Technology-specific provider of a DDD Repository
+ *
+ * @author github.com/abchau
  */
 @Service
-class VetRepositoryImpl implements VetRepository {
+/*final*/ class VetRepositoryImpl implements VetRepository {
 
 	private final VetEntityRepository vetEntityRepository;
 

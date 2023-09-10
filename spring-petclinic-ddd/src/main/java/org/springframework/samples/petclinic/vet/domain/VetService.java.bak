@@ -23,7 +23,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
  *
  * @author github.com/abchau
  */
-public sealed interface VetService permits VetServiceImpl {
+public /*sealed*/ interface VetService /*permits VetServiceImpl*/ {
 
 	public Collection<Vet> findAll();
 

@@ -25,8 +25,13 @@ import org.springframework.samples.petclinic.pet.domain.Pet;
 import org.springframework.samples.petclinic.pet.domain.PetType;
 import org.springframework.samples.petclinic.pet.domain.PetRepository;
 
+/**
+ * A DDD Application Service
+ *
+ * @author github.com/abchau
+ */
 @Service
-non-sealed class PetFacadeImpl implements PetFacade {
+/*final*/ class PetFacadeImpl implements PetFacade {
 
 	private final PetRepository petRepository;
 

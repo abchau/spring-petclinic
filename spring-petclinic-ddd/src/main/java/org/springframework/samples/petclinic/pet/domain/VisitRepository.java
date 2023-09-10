@@ -18,9 +18,9 @@ package org.springframework.samples.petclinic.pet.domain;
 import java.util.List;
 
 /**
- * A DDD Repository (not Spring Data Repository)
+ * A DDD Repository (Don't confuse with Spring Data Repository)
  * A DDD Domain Service
- * 
+ *
  * @author github.com/abchau
  */
 public interface VisitRepository {

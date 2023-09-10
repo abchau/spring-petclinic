@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-class ShowOwnerUseCase implements ShowOwnerPort {
+/*final*/ class ShowOwnerUseCase implements ShowOwnerPort {
 
 	private final LoadOwnerPort loadOwnerPort;
 

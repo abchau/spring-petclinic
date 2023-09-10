@@ -18,7 +18,7 @@ package org.springframework.samples.petclinic.pet.domain.owner;
 import org.springframework.samples.petclinic.pet.domain.owner.Owner.PaginatedOwner;
 
 /**
- * A DDD Repository (not Spring Data Repository)
+ * A DDD Repository (DOn't confuse with Spring Data Repository)
  * 
  * @author github.com/abchau
  */

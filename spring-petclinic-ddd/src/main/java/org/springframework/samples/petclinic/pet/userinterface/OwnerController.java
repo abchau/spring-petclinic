@@ -44,7 +44,7 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
  * @author github.com/abchau
  */
 @Controller
-class OwnerController {
+/*final*/ class OwnerController {
 
 	private final OwnerFacade ownerFacade;
 

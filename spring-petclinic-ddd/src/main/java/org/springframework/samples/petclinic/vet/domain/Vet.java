@@ -25,8 +25,9 @@ import java.util.List;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Arjen Poutsma
+ * @author github.com/abchau
  */
-public class Vet {
+public final class Vet {
 
 	private Integer id;
 

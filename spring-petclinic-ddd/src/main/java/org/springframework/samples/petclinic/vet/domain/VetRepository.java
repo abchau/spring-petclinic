@@ -21,7 +21,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 
 /**
  * A DDD Repository
- * A DDD Domain Service
+ * @author github.com/abchau
  */
 public interface VetRepository {
 

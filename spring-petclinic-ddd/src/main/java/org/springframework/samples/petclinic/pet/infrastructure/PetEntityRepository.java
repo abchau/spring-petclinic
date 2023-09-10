@@ -33,7 +33,7 @@ import org.springframework.data.repository.Repository;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface PetEntityRepository extends Repository<PetEntity, Integer> {
+interface PetEntityRepository extends Repository<PetEntity, Integer> {
 
 	/**
 	 * Save an {@link PetEntity} to the data store, either inserting or updating it.

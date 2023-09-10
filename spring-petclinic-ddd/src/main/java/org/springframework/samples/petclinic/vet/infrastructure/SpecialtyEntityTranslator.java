@@ -17,6 +17,9 @@ package org.springframework.samples.petclinic.vet.infrastructure;
 
 import org.springframework.samples.petclinic.vet.domain.Specialty;
 
+/**
+ * @author github.com/abchau
+ */
 final class SpecialtyEntityTranslator {
 
 	public static Specialty toDomainModel(SpecialtyEntity specialtyEntity) {

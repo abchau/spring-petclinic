@@ -30,7 +30,7 @@ import org.springframework.data.repository.Repository;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface PetTypeEntityRepository extends Repository<PetTypeEntity, Integer> {
+interface PetTypeEntityRepository extends Repository<PetTypeEntity, Integer> {
 
 	/**
 	 * Retrieve all {@link PetType}s from the data store.

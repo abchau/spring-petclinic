@@ -4,9 +4,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.samples.petclinic.pet.domain.Pet;
 
-public class PetEntityTranslator {
+final class PetEntityTranslator {
 
-	public static Pet toDomainModel(PetEntity petEntity) {
+	static Pet toDomainModel(PetEntity petEntity) {
 		Pet pet = new Pet();
 		pet.setId(petEntity.getId());
 		pet.setOwnerId(petEntity.getOwnerId());
@@ -25,7 +25,7 @@ public class PetEntityTranslator {
 		return pet;
 	}
 
-	public static PetEntity toPersistenceModel(Pet pet) {
+	static PetEntity toPersistenceModel(Pet pet) {
 		PetEntity petEntity = new PetEntity();
 		petEntity.setId(pet.getId());
 		petEntity.setOwnerId(pet.getOwnerId());

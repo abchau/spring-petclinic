@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 import org.springframework.samples.petclinic.pet.domain.Owner;
 
 /**
- * Technology-specific anti-corruption layer
+ * Technology-specific translation
  *
  * @author github.com/abchau
  */
-public class OwnerEntityTranslator {
+final class OwnerEntityTranslator {
 
-	public static Owner toDomainModel(OwnerEntity ownerEntity) {
+	static Owner toDomainModel(OwnerEntity ownerEntity) {
 		Owner owner = new Owner();
 		owner.setId(ownerEntity.getId());
 		owner.setFirstName(ownerEntity.getFirstName());
@@ -26,7 +26,7 @@ public class OwnerEntityTranslator {
 		return owner;
 	}
 
-	public static OwnerEntity toPersistenceModel(Owner owner) {
+	static OwnerEntity toPersistenceModel(Owner owner) {
 		OwnerEntity ownerEntity = new OwnerEntity();
 		ownerEntity.setId(owner.getId());
 		ownerEntity.setFirstName(owner.getFirstName());

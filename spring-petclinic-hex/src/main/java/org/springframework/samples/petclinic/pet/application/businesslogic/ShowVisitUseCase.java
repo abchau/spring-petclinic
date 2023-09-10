@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-class ShowVisitUseCase implements ShowVisitPort {
+/*final*/ class ShowVisitUseCase implements ShowVisitPort {
 
 	private final LoadVisitPort loadVisitPort;
 

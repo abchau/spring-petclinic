@@ -23,8 +23,13 @@ import org.springframework.samples.petclinic.pet.domain.Owner;
 import org.springframework.samples.petclinic.pet.domain.OwnerRepository;
 import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 
+/**
+ * A DDD Application Service
+ *
+ * @author github.com/abchau
+ */
 @Service
-non-sealed class OwnerFacadeImpl implements OwnerFacade {
+/*final*/ class OwnerFacadeImpl implements OwnerFacade {
 
 	private final OwnerRepository ownerRepository;
 

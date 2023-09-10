@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-class ShowPetUseCase implements ShowPetPort {
+/*final*/ class ShowPetUseCase implements ShowPetPort {
 
 	private final LoadPetPort loadPetPort;
 

@@ -24,15 +24,17 @@ import org.springframework.samples.petclinic.pet.domain.Visit;
 import org.springframework.samples.petclinic.pet.domain.VisitRepository;
 
 /**
- * It can be a local transaction or remote RPC to other services, cloud services, etc
+ * Technology-specific provider of a DDD Repository
+ *
+ * @author github.com/abchau
  */
 @Service
-class VisitRepositoryProvider implements VisitRepository {
+/*final*/ class VisitRepositoryImpl implements VisitRepository {
 
 	private final VisitEntityRepository visitEntityRepository;
 
 	@Autowired
-	public VisitRepositoryProvider(VisitEntityRepository visitEntityRepository) {
+	public VisitRepositoryImpl(VisitEntityRepository visitEntityRepository) {
 		this.visitEntityRepository = visitEntityRepository;
 	}
 

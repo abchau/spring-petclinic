@@ -28,7 +28,7 @@ import org.springframework.data.repository.Repository;
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
  *
  */
-public interface VisitEntityRepository extends Repository<VisitEntity, Integer> {
+interface VisitEntityRepository extends Repository<VisitEntity, Integer> {
 
 	/**
 	 * Save an {@link VisitEntity} to the data store, either inserting or updating it.

@@ -2,9 +2,9 @@ package org.springframework.samples.petclinic.vet.drivenadapter.persistence;
 
 import org.springframework.samples.petclinic.vet.domain.Specialty;
 
-public class SpecialtyEntityTranslator {
+final class SpecialtyEntityTranslator {
 
-	public static Specialty toDomainModel(SpecialtyEntity specialtyEntity) {
+	static Specialty toDomainModel(SpecialtyEntity specialtyEntity) {
 		Specialty specialty = new Specialty();
 		specialty.setId(specialtyEntity.getId());
 		specialty.setName(specialtyEntity.getName());
@@ -12,7 +12,7 @@ public class SpecialtyEntityTranslator {
 		return specialty;
 	}
 
-	public static SpecialtyEntity toPersistenceModel(Specialty specialty) {
+	static SpecialtyEntity toPersistenceModel(Specialty specialty) {
 		SpecialtyEntity specialtyEntity = new SpecialtyEntity();
 		specialtyEntity.setId(specialty.getId());
 		specialtyEntity.setName(specialty.getName());

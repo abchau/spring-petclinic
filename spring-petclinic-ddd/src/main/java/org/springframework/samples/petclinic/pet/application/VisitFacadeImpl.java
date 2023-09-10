@@ -23,8 +23,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.samples.petclinic.pet.domain.Visit;
 import org.springframework.samples.petclinic.pet.domain.VisitRepository;
 
+/**
+ * A DDD Application Service
+ *
+ * @author github.com/abchau
+ */
 @Service
-non-sealed class VisitFacadeImpl implements VisitFacade {
+/*final*/ class VisitFacadeImpl implements VisitFacade {
 
 	private final VisitRepository visitRepository;
 

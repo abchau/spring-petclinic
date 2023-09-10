@@ -37,7 +37,7 @@ import jakarta.persistence.ManyToOne;
  */
 @Entity
 @Table(name = "visits")
-public class VisitEntity {
+class VisitEntity {
 
 	@Id
 	@Column(name = "id")

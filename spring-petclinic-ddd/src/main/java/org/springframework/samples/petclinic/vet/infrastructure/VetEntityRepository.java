@@ -35,7 +35,7 @@ import java.util.Collection;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VetEntityRepository extends Repository<VetEntity, Integer> {
+interface VetEntityRepository extends Repository<VetEntity, Integer> {
 
 	/**
 	 * Retrieve all <code>Vet</code>s from the data store.

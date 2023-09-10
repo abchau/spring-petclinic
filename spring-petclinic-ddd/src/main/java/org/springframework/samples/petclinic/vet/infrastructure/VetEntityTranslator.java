@@ -19,9 +19,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.samples.petclinic.vet.domain.Vet;
 
+/**
+ * @author github.com/abchau
+ */
 final class VetEntityTranslator {
 
-	public static Vet toDomainModel(VetEntity vetEntity) {
+	static Vet toDomainModel(VetEntity vetEntity) {
 		Vet vet = new Vet();
 		vet.setId(vetEntity.getId());
 		vet.setFirstName(vetEntity.getFirstName());
@@ -34,7 +37,7 @@ final class VetEntityTranslator {
 		return vet;
 	}
 
-	public static VetEntity toPersistenceModel(Vet vet) {
+	static VetEntity toPersistenceModel(Vet vet) {
 		VetEntity vetEntity = new VetEntity();
 		vetEntity.setId(vet.getId());
 		vetEntity.setFirstName(vet.getFirstName());

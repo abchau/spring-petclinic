@@ -22,7 +22,7 @@ import java.time.LocalDate;
  *
  * @author github.com/abchau
  */
-public class Visit {
+public final class Visit {
 
 	private Integer id;
 

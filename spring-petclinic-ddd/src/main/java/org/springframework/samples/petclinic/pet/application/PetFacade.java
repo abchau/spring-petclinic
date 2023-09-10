@@ -25,7 +25,7 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
  *
  * @author github.com/abchau
  */
-public sealed interface PetFacade permits PetFacadeImpl {
+public /*sealed*/ interface PetFacade /*permits PetFacadeImpl*/ {
 
 	public Pet createPet(Pet newPet);
 

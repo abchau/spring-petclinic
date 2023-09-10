@@ -24,7 +24,7 @@ import org.springframework.samples.petclinic.pet.domain.Visit;
  *
  * @author github.com/abchau
  */
-public sealed interface VisitFacade permits VisitFacadeImpl {
+public /*sealed*/ interface VisitFacade /*permits VisitFacadeImpl*/ {
 
 	public Visit addVisit(Visit newVisit);
 

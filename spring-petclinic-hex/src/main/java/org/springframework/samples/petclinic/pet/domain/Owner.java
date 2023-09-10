@@ -26,7 +26,7 @@ import org.springframework.core.style.ToStringCreator;
  *
  * @author github.com/abchau
  */
-public class Owner {
+public final class Owner {
 
 	private Integer id;
 

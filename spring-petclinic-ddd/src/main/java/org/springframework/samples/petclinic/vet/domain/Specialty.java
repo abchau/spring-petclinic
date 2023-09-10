@@ -20,7 +20,7 @@ package org.springframework.samples.petclinic.vet.domain;
  *
  * @author Juergen Hoeller
  */
-public class Specialty {
+public final class Specialty {
 
 	private Integer id;
 

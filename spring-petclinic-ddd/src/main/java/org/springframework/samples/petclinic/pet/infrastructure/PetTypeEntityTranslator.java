@@ -17,9 +17,9 @@ package org.springframework.samples.petclinic.pet.infrastructure;
 
 import org.springframework.samples.petclinic.pet.domain.PetType;
 
-class PetTypeEntityTranslator {
+final class PetTypeEntityTranslator {
 
-	public static PetType toDomainModel(PetTypeEntity petTypeEntity) {
+	static PetType toDomainModel(PetTypeEntity petTypeEntity) {
 		PetType petType = new PetType();
 		petType.setId(petTypeEntity.getId());
 		petType.setName(petTypeEntity.getName());

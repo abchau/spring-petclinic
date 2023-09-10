@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-non-sealed class OwnerServiceImpl implements OwnerService {
+/*final*/ class OwnerServiceImpl implements OwnerService {
 
 	private final OwnerRepository ownerRepository;
 

@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-non-sealed class VisitServiceImpl implements VisitService {
+/*final*/ class VisitServiceImpl implements VisitService {
 
 	private final VisitRepository visitRepository;
 

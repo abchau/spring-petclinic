@@ -44,7 +44,7 @@ import jakarta.persistence.OrderBy;
 @Entity
 @NamedEntityGraph(name = "OwnerEntity.pets", attributeNodes = @NamedAttributeNode("pets"))
 @Table(name = "owners")
-public class OwnerEntity {
+class OwnerEntity {
 
 	@Id
 	@Column(name = "id")

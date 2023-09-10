@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author github.com/abchau
  */
-public sealed interface PetService permits PetServiceImpl {
+public /*sealed*/ interface PetService /*permits PetServiceImpl*/ {
 
 	public Pet createPet(Pet newPet);
 

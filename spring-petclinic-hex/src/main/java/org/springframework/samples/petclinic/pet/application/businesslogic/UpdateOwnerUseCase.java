@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-class UpdateOwnerUseCase implements UpdateOwnerPort {
+/*final*/ class UpdateOwnerUseCase implements UpdateOwnerPort {
 
 	private final SaveOwnerPort saveOwnerPort;
 

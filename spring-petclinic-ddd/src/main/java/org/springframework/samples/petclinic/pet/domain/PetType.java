@@ -18,7 +18,7 @@ package org.springframework.samples.petclinic.pet.domain;
 /**
  * @author github.com/abchau
  */
-public class PetType {
+public final class PetType {
 
 	private Integer id;
 

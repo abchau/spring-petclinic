@@ -25,17 +25,19 @@ import org.springframework.samples.petclinic.pet.domain.PetRepository;
 import org.springframework.samples.petclinic.pet.domain.PetType;
 
 /**
- * It can be a local transaction or RPC to other services, loud services, etc
+ * Technology-specific provider of a DDD Repository
+ *
+ * @author github.com/abchau
  */
 @Service
-class PetRepositoryProvider implements PetRepository {
+/*final*/ class PetRepositoryImpl implements PetRepository {
 
 	private final PetEntityRepository petEntityRepository;
 
 	private final PetTypeEntityRepository petTypeEntityRepository;
 
 	@Autowired
-	public PetRepositoryProvider(PetEntityRepository petEntityRepository,
+	public PetRepositoryImpl(PetEntityRepository petEntityRepository,
 			PetTypeEntityRepository petTypeEntityRepository) {
 		this.petEntityRepository = petEntityRepository;
 		this.petTypeEntityRepository = petTypeEntityRepository;

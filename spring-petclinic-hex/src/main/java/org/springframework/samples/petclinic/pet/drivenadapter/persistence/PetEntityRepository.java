@@ -34,7 +34,7 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
  * @author Michael Isvy
  * @author github.com/abchau
  */
-public interface PetEntityRepository extends Repository<PetEntity, Integer> {
+interface PetEntityRepository extends Repository<PetEntity, Integer> {
 
 	/**
 	 * Save an {@link PetEntity} to the data store, either inserting or updating it.

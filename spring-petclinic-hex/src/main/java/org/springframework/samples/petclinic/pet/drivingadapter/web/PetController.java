@@ -44,7 +44,7 @@ import org.springframework.samples.petclinic.pet.domain.Pet;
  */
 @Controller
 @RequestMapping("/owners/{ownerId}/pets")
-class PetController {
+/*final*/ class PetController {
 
 	private final ShowOwnerPort showOwnerPort;
 
@@ -71,6 +71,7 @@ class PetController {
 		model.put("mode", "new");
 		model.put("owner", showOwnerPort.findById(ownerId));
 		model.put("types", showPetPort.findPetTypes());
+		
 		return "pets/createOrUpdatePetForm";
 	}
 
@@ -80,6 +81,7 @@ class PetController {
 		if (result.hasErrors()) {
 			redirectAttributes.addFlashAttribute("form", form);
 			redirectAttributes.addFlashAttribute("errors", result.getFieldErrors());
+			
 			return "redirect:/owners/{ownerId}/pets/new";
 		}
 
@@ -98,6 +100,7 @@ class PetController {
 		model.put("mode", "edit");
 		model.put("owner", showOwnerPort.findById(ownerId));
 		model.put("types", showPetPort.findPetTypes());
+
 		return "pets/createOrUpdatePetForm";
 	}
 
@@ -107,15 +110,15 @@ class PetController {
 		if (result.hasErrors()) {
 			redirectAttributes.addFlashAttribute("form", form);
 			redirectAttributes.addFlashAttribute("errors", result.getFieldErrors());
+			
 			return "redirect:/owners/{ownerId}/pets/{petId}/edit";
 		}
 
-		// demostrates doing extra validation by comparing parh variable and form
-		// value. Do it based on your preference. Not necessary to follow
 		if (petId != form.getId()) {
 			redirectAttributes.addFlashAttribute("form", form);
 			FieldError fieldError = new FieldError(Pet.class.getName(), "id", "gocha!");
 			redirectAttributes.addFlashAttribute("errors", List.of(fieldError));
+			
 			return "redirect:/owners/{ownerId}/pets/{petId}/edit";
 		}
 

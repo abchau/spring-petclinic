@@ -10,7 +10,7 @@ import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Component;
 
 @Component
-class ShowVetUseCase implements ShowVetPort {
+/*final*/ class ShowVetUseCase implements ShowVetPort {
 
 	private final LoadVetPort loadVetPort;
 

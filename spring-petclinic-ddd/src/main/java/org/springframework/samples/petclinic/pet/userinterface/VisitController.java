@@ -42,7 +42,7 @@ import org.springframework.samples.petclinic.pet.domain.Visit;
  * @author github.com/abchau
  */
 @Controller
-class VisitController {
+/*final*/ class VisitController {
 
 	private final VisitFacade visitFacade;
 

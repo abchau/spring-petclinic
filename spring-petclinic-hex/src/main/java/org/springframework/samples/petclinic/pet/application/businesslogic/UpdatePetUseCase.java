@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-class UpdatePetUseCase implements UpdatePetPort {
+/*final*/ class UpdatePetUseCase implements UpdatePetPort {
 
 	private final SavePetPort savePetPort;
 

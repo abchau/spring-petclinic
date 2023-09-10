@@ -30,19 +30,17 @@ import org.springframework.samples.petclinic.pet.domain.OwnerRepository;
 import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 
 /**
- * Technology-specific provider of a DDD Repository Domain SPI
- *
- * It can be a local transaction or RPC to other services, loud services, etc
+ * Technology-specific provider of a DDD Repository
  *
  * @author github.com/abchau
  */
 @Service
-class OwnerRepositoryProvider implements OwnerRepository {
+/*final*/ class OwnerRepositoryImpl implements OwnerRepository {
 
 	private final OwnerEntityRepository ownerEntityRepository;
 
 	@Autowired
-	public OwnerRepositoryProvider(OwnerEntityRepository ownerEntityRepository) {
+	public OwnerRepositoryImpl(OwnerEntityRepository ownerEntityRepository) {
 		this.ownerEntityRepository = ownerEntityRepository;
 	}
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author github.com/abchau
  */
 @Component
-class AddVisitUseCase implements AddVisitPort {
+/*final*/ class AddVisitUseCase implements AddVisitPort {
 
 	private final SaveVisitPort saveVisitPort;
 

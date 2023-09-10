@@ -47,7 +47,7 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
  * @author github.com/abchau
  */
 @Controller
-class OwnerController {
+/*final*/ class OwnerController {
 
 	private final ShowOwnerPort showOwnerPort;
 
@@ -79,6 +79,7 @@ class OwnerController {
 		if (result.hasErrors()) {
 			redirectAttributes.addFlashAttribute("form", form);
 			redirectAttributes.addFlashAttribute("errors", result.getFieldErrors());
+			
 			return "redirect:/owners/new";
 		}
 
@@ -133,6 +134,7 @@ class OwnerController {
 			model.put("form", showOwnerPort.findById(id));
 		}
 		model.put("mode", "edit");
+		
 		return "owners/createOrUpdateOwnerForm";
 	}
 
@@ -142,6 +144,7 @@ class OwnerController {
 		if (result.hasErrors()) {
 			redirectAttributes.addFlashAttribute("form", form);
 			redirectAttributes.addFlashAttribute("errors", result.getFieldErrors());
+			
 			return "redirect:/owners/{id}/edit";
 		}
 
@@ -150,6 +153,7 @@ class OwnerController {
 			redirectAttributes.addFlashAttribute("form", form);
 			FieldError fieldError = new FieldError(Owner.class.getName(), "id", "gocha!");
 			redirectAttributes.addFlashAttribute("errors", List.of(fieldError));
+			
 			return "redirect:/owners/{id}/edit";
 		}
 
@@ -168,6 +172,7 @@ class OwnerController {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		Owner owner = showOwnerPort.findWithPetsById(id);
 		mav.addObject(owner);
+		
 		return mav;
 	}
 

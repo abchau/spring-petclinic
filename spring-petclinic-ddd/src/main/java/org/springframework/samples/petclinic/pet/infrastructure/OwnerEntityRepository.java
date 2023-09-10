@@ -39,7 +39,7 @@ import org.springframework.samples.petclinic.pet.domain.Owner;
  * @author Michael Isvy
  * @author github.com/abchau
  */
-public interface OwnerEntityRepository extends Repository<OwnerEntity, Integer> {
+interface OwnerEntityRepository extends Repository<OwnerEntity, Integer> {
 
 	/**
 	 * Retrieve {@link Owner}s from the data store by last name, returning all owners
