@@ -65,7 +65,7 @@ h|Output
 |
 
 |link:spring-petclinic-ddd[]
-|A lightweight DDD example
+|A lazy DDD example
 |Y
 |Y
 |Y
