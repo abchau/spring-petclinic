@@ -1,4 +1,4 @@
-= DDD Examples based on Spring PetClinic Sample Application
+= Hexagonal and DDD Examples based on Spring PetClinic Sample Application
 
 == Origin
 
@@ -12,7 +12,7 @@ Derived from link:https://github.com/spring-projects/spring-petclinic[Spring Pet
 * only to provide examples 
 * minimal maintenance effort
 
-== Baseline changes compared to original code
+== Major changes compared to original
 
 * removed gradle
 * removed all tests as original tests are no longer relevant
@@ -24,13 +24,12 @@ Derived from link:https://github.com/spring-projects/spring-petclinic[Spring Pet
 * removed uses of `WebDataBinder`, `Validator`, and `@ModelAttribute` annotation at method level
 * applied PRG pattern
 * applied some basic error messages
-* applied packages to apply some level of layering
-* applied Spring Data Repository for each jpa entity
+* reorganised packages
 
 == How to use
 
 * download the repo
-* compare the four projects
+* compare the four projects with a tool you like
 
 == Project Structures
 
@@ -64,13 +63,13 @@ h|Output
 |
 |Layered Architecture Example 
 
-Rewritten from Orginal to a typical Layered example.
+Rewritten from Orginal to a typical Layered example where the same `Model` is used everywhere
 
 
 
 |link:spring-petclinic-hex[]
 
-|Yfootnote:[DI attribute lost if web technologies (e.g. request, session, etc) leak into `"Use Case" Layer`]
+|Yfootnote:[Didn't demostrate in the example]
 |Y
 |Y
 |Y
