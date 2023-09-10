@@ -34,13 +34,13 @@ Derived from link:https://github.com/spring-projects/spring-petclinic[Spring Pet
 
 == Project Structures
 
-[cols="2,4,1,1,1,1,1", width="100%"]
+[cols="2,1,1,1,1,1,4", width="100%"]
 |===
 
 .2+h|Project
-.2+h|Summary
 3+h|Separation of Concern
 2+h|Dependency Inversion
+.2+h|Summary
 
 h|Input Model
 h|Domain Model
@@ -49,37 +49,43 @@ h|Input
 h|Output
 
 |link:spring-petclinic-org[]
+|
+|
+|
+|
+|
 |Original before fork
-|
-|
-|
-|
-|
 
 |link:spring-petclinic-layered[]
-|Baseline - typical Layered example
 |
 |
 |
-|Y
+|Yfootnote:[DI attribute lost if web technologies (e.g. request, session, etc) leak into `"Service" Layer`]
 |
+|Layered Architecture Example 
 
-|link:spring-petclinic-ddd[]
-|A lazy DDD example
-|Y
-|Y
-|Y
-|Y
-|Y
+Rewritten from Orginal to a typical Layered example.
+
+
 
 |link:spring-petclinic-hex[]
-a|Hexagonal example
 
+|Yfootnote:[DI attribute lost if web technologies (e.g. request, session, etc) leak into `"Use Case" Layer`]
+|Y
+|Y
+|Y
+|Y
+a|Hexagonal Architecture Example
+
+|link:spring-petclinic-ddd[]
 |Y
 |Y
 |Y
 |Y
 |Y
+|A lazy but "good enough" DDD Architecture Example. 
+
+Minimal personal favoured changes from layered example to achieve isolation
 
 |===
 

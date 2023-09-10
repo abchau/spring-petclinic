@@ -19,6 +19,7 @@ package org.springframework.samples.petclinic.vet.domain;
  * Models a {@link Vet Vet's} specialty (for example, dentistry).
  *
  * @author Juergen Hoeller
+ * @author github.com/abchau
  */
 public final class Specialty {
 

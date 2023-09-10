@@ -24,6 +24,7 @@ import jakarta.persistence.Id;
 
 /**
  * @author Juergen Hoeller Can be Cat, Dog, Hamster...
+ * @author github.com/abchau
  */
 @Entity
 @Table(name = "types")

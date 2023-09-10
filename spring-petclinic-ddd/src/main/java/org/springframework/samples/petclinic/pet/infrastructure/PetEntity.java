@@ -40,6 +40,7 @@ import jakarta.persistence.Id;
  * @author Ken Krebs
  * @author Juergen Hoeller
  * @author Sam Brannen
+ * @author github.com/abchau
  */
 @Entity
 @NamedEntityGraph(name = "PetEntity.visits", attributeNodes = @NamedAttributeNode("visits"))

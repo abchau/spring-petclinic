@@ -4,6 +4,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.samples.petclinic.pet.domain.Pet;
 
+/**
+ * Technology-specific translation
+ *
+ * @author github.com/abchau
+ */
 final class PetEntityTranslator {
 
 	static Pet toDomainModel(PetEntity petEntity) {

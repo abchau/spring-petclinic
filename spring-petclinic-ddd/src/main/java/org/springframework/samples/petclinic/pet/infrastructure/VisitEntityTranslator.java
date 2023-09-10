@@ -17,6 +17,11 @@ package org.springframework.samples.petclinic.pet.infrastructure;
 
 import org.springframework.samples.petclinic.pet.domain.Visit;
 
+/**
+ * Technology-specific translation
+ *
+ * @author github.com/abchau
+ */
 final class VisitEntityTranslator {
 
 	static Visit toDomainModel(VisitEntity visitEntity) {

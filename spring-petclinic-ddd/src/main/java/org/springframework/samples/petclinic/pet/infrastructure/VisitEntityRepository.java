@@ -27,6 +27,7 @@ import org.springframework.data.repository.Repository;
  * Data. See:
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
  *
+ * @author github.com/abchau
  */
 interface VisitEntityRepository extends Repository<VisitEntity, Integer> {
 

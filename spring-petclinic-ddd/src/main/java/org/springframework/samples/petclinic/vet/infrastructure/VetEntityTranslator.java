@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 import org.springframework.samples.petclinic.vet.domain.Vet;
 
 /**
+ * Technology-specific translation
+ *
  * @author github.com/abchau
  */
 final class VetEntityTranslator {

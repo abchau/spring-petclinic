@@ -34,6 +34,7 @@ import jakarta.persistence.ManyToOne;
  *
  * @author Ken Krebs
  * @author Dave Syer
+ * @author github.com/abchau
  */
 @Entity
 @Table(name = "visits")

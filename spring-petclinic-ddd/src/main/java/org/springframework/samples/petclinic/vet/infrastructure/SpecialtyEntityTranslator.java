@@ -18,6 +18,8 @@ package org.springframework.samples.petclinic.vet.infrastructure;
 import org.springframework.samples.petclinic.vet.domain.Specialty;
 
 /**
+ * Technology-specific translation
+ *
  * @author github.com/abchau
  */
 final class SpecialtyEntityTranslator {

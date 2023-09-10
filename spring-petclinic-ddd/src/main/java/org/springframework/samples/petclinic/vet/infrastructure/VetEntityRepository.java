@@ -34,6 +34,7 @@ import java.util.Collection;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
+ * @author github.com/abchau
  */
 interface VetEntityRepository extends Repository<VetEntity, Integer> {
 

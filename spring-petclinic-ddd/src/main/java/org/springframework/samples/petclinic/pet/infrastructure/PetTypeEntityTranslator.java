@@ -17,6 +17,11 @@ package org.springframework.samples.petclinic.pet.infrastructure;
 
 import org.springframework.samples.petclinic.pet.domain.PetType;
 
+/**
+ * Technology-specific translation
+ *
+ * @author github.com/abchau
+ */
 final class PetTypeEntityTranslator {
 
 	static PetType toDomainModel(PetTypeEntity petTypeEntity) {

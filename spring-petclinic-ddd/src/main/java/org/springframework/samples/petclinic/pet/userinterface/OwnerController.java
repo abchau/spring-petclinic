@@ -177,34 +177,28 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 		}
 	}
 
-	private static record CreateOwnerForm(@NotEmpty String firstName,
-
-			@NotEmpty String lastName,
-
-			@NotEmpty String address,
-
-			@NotEmpty String city,
-
-			@NotEmpty @Digits(fraction = 0, integer = 10) String telephone) {
+	private static record CreateOwnerForm(
+		@NotEmpty String firstName,
+		@NotEmpty String lastName,
+		@NotEmpty String address,
+		@NotEmpty String city,
+		@NotEmpty @Digits(fraction = 0, integer = 10) String telephone
+	) {
 		public static CreateOwnerForm empty() {
 			return new CreateOwnerForm(null, null, null, null, null);
 		}
 	}
 
-	private static record UpdateOwnerForm(Integer id,
-
-			@NotEmpty String firstName,
-
-			@NotEmpty String lastName,
-
-			@NotEmpty String address,
-
-			@NotEmpty String city,
-
-			@NotEmpty @Digits(fraction = 0, integer = 10) String telephone) {
+	private static record UpdateOwnerForm(
+		@NotEmpty Integer id,
+		@NotEmpty String firstName,
+		@NotEmpty String lastName,
+		@NotEmpty String address,
+		@NotEmpty String city,
+		@NotEmpty @Digits(fraction = 0, integer = 10) String telephone
+	) {
 		public static UpdateOwnerForm of(Owner owner) {
-			return new UpdateOwnerForm(owner.getId(), owner.getFirstName(), owner.getLastName(), owner.getAddress(),
-					owner.getCity(), owner.getTelephone());
+			return new UpdateOwnerForm(owner.getId(), owner.getFirstName(), owner.getLastName(), owner.getAddress(), owner.getCity(), owner.getTelephone());
 		}
 	}
 

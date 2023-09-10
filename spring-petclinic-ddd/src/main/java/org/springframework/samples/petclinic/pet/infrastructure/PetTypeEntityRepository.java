@@ -29,6 +29,7 @@ import org.springframework.data.repository.Repository;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
+ * @author github.com/abchau
  */
 interface PetTypeEntityRepository extends Repository<PetTypeEntity, Integer> {
 
