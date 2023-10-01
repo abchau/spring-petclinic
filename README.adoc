@@ -72,7 +72,7 @@ Rewritten from Layered Architecture Example
 |link:spring-petclinic-ddd[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
-|DDD Architecture (Clean/Onion)
+|DDD Architecture (Clean/Onion) Example
 
 Rewritten from Layered Architecture Example 
 
@@ -96,7 +96,7 @@ Rewritten from Layered Architecture Example
 |Service
 |Model
 |Data Access
-.3+|These are essentically the same concept with different names
+.3+|In some sense, these are very similar concept with slightly different focus
 
 |Hexagonal
 |Driving
@@ -105,7 +105,7 @@ Rewritten from Layered Architecture Example
 
 |DDD
 |User Interface
-|Application
+|Application Service
 |Domain
 |Infrastructure
 
