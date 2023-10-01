@@ -14,17 +14,20 @@ import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 class ArchitectureTests {
 
     @ArchTest
-	private static final ArchRule vet_layer_dependencies_are_respected = onionArchitecture()
-			.domainModels("..domain..")
-			.domainServices("..domain..")
-			.applicationServices("..application..")
-			.adapter("userinterfaxe", "..userinterfaxe..")
-			.adapter("infrastructure", "..infrastructure..")
-	
-	// @ArchTest
-	// private static final ArchRule vet_shoult_not_have_circular_dependencies = slices()
-	// 	.matching("org.springframework.samples.petclinic.(*)..")
-	// 	.should().beFreeOfCycles();
-	
+	private static final ArchRule pet_layer_dependencies_are_respected = layeredArchitecture().consideringAllDependencies()
+		// Define layers
+		.layer("Driving Adapter").definedBy("org.springframework.samples.petclinic.vet.drivingadapter..")
+		.layer("Application").definedBy("org.springframework.samples.petclinic.vet.application..")
+		.layer("Driving Port").definedBy("org.springframework.samples.petclinic.vet.application.drivingport..")
+		.layer("Business Logic").definedBy("org.springframework.samples.petclinic.vet.application.businesslogic..")
+		.layer("Driven Port").definedBy("org.springframework.samples.petclinic.vet.application.drivenport..")
+		.layer("Driven Adapter").definedBy("org.springframework.samples.petclinic.vet.drivenadapter..")
+		// Add constraints
+		.whereLayer("Driving Adapter").mayNotBeAccessedByAnyLayer()
+		.whereLayer("Application").mayOnlyBeAccessedByLayers("Driving Adapter", "Driven Adapter")
+		.whereLayer("Driving Port").mayOnlyBeAccessedByLayers("Driving Adapter", "Business Logic")
+		.whereLayer("Business Logic").mayOnlyBeAccessedByLayers("Driving Adapter")
+		.whereLayer("Driven Port").mayOnlyBeAccessedByLayers("Business Logic", "Driven Adapter")
+		.whereLayer("Driven Adapter").mayNotBeAccessedByAnyLayer();
 
 }

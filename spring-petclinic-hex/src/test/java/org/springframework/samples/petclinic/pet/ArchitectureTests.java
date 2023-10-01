@@ -26,6 +26,7 @@ class ArchitectureTests {
 		.whereLayer("Driving Adapter").mayNotBeAccessedByAnyLayer()
 		.whereLayer("Application").mayOnlyBeAccessedByLayers("Driving Adapter", "Driven Adapter")
 		.whereLayer("Driving Port").mayOnlyBeAccessedByLayers("Driving Adapter", "Business Logic")
+		.whereLayer("Business Logic").mayOnlyBeAccessedByLayers("Driving Adapter")
 		.whereLayer("Driven Port").mayOnlyBeAccessedByLayers("Business Logic", "Driven Adapter")
 		.whereLayer("Driven Adapter").mayNotBeAccessedByAnyLayer();
 
