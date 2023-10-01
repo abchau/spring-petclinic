@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * Simple business object representing a pet.
- *
+
  * @author github.com/abchau
  */
 public final class Pet {

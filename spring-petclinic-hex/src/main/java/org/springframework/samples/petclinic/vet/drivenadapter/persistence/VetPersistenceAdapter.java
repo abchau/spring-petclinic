@@ -3,21 +3,26 @@ package org.springframework.samples.petclinic.vet.drivenadapter.persistence;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.vet.application.Specialty;
+import org.springframework.samples.petclinic.vet.application.Vet;
+import org.springframework.samples.petclinic.vet.application.Vet.PaginatedVet;
 import org.springframework.samples.petclinic.vet.application.drivenadapter.LoadVetPort;
-import org.springframework.samples.petclinic.vet.domain.Vet;
-import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * It can be a local transaction or remote RPC to other services, cloud services, etc
+ * Technology-specific provider of a Domain SPI
+ *
+ * @author github.com/abchau
  */
+@SecondaryAdapter
 @Service
-/*final*/ class VetPersistenceAdapter implements LoadVetPort {
+class VetPersistenceAdapter implements LoadVetPort {
 
 	private final VetEntityRepository vetEntityRepository;
 
@@ -27,9 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 	@Override
 	public List<Vet> findAll() {
-		return vetEntityRepository.findAll()
-			.stream()
-			.map(VetEntityTranslator::toDomainModel)
+		return vetEntityRepository.findAll().stream()
+			.map(VetPersistenceAdapter::translateToDomainModel)
 			.collect(Collectors.toList());
 	}
 
@@ -39,7 +43,9 @@ import org.springframework.transaction.annotation.Transactional;
 		Pageable pageable = PageRequest.of(page - 1, 5);
 
 		Page<VetEntity> jpaEntities = vetEntityRepository.findAll(pageable);
-		List<Vet> vets = jpaEntities.stream().map(VetEntityTranslator::toDomainModel).collect(Collectors.toList());
+		List<Vet> vets = jpaEntities.stream()
+			.map(VetPersistenceAdapter::translateToDomainModel)
+			.collect(Collectors.toList());
 
 		Page<Vet> result = new PageImpl<Vet>(vets, pageable, jpaEntities.getTotalElements());
 
@@ -51,4 +57,43 @@ import org.springframework.transaction.annotation.Transactional;
 		return paginatedVet;
 	}
 
+	static Vet translateToDomainModel(VetEntity vetEntity) {
+		Vet vet = new Vet();
+		vet.setId(vetEntity.getId());
+		vet.setFirstName(vetEntity.getFirstName());
+		vet.setLastName(vetEntity.getLastName());
+		vet.setSpecialties(vetEntity.getSpecialties().stream()
+			.map(VetPersistenceAdapter::translateToDomainModel)
+			.collect(Collectors.toList()));
+
+		return vet;
+	}
+
+	static VetEntity translateToPersistenceModel(Vet vet) {
+		VetEntity vetEntity = new VetEntity();
+		vetEntity.setId(vet.getId());
+		vetEntity.setFirstName(vet.getFirstName());
+		vetEntity.setLastName(vet.getLastName());
+		vetEntity.setSpecialties(vet.getSpecialties().stream()
+			.map(VetPersistenceAdapter::translateToPersistenceModel)
+			.collect(Collectors.toList()));
+
+		return vetEntity;
+	}
+
+	static Specialty translateToDomainModel(SpecialtyEntity specialtyEntity) {
+		Specialty specialty = new Specialty();
+		specialty.setId(specialtyEntity.getId());
+		specialty.setName(specialtyEntity.getName());
+
+		return specialty;
+	}
+
+	static SpecialtyEntity translateToPersistenceModel(Specialty specialty) {
+		SpecialtyEntity specialtyEntity = new SpecialtyEntity();
+		specialtyEntity.setId(specialty.getId());
+		specialtyEntity.setName(specialty.getName());
+
+		return specialtyEntity;
+	}
 }

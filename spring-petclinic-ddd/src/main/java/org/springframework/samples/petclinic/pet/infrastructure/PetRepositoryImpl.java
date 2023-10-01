@@ -30,7 +30,7 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
  * @author github.com/abchau
  */
 @Service
-/*final*/ class PetRepositoryImpl implements PetRepository {
+class PetRepositoryImpl implements PetRepository {
 
 	private final PetEntityRepository petEntityRepository;
 
@@ -45,31 +45,31 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
 
 	@Override
 	public Pet create(Pet newPet) {
-		PetEntity newPetEntity = PetEntityTranslator.toPersistenceModel(newPet);
+		PetEntity newPetEntity = PetRepositoryImpl.translateToPersistenceModel(newPet);
 		PetEntity savedPetEntity = petEntityRepository.save(newPetEntity);
-		Pet savedPet = PetEntityTranslator.toDomainModel(savedPetEntity);
+		Pet savedPet = PetRepositoryImpl.translateToDomainModel(savedPetEntity);
 		return savedPet;
 	}
 
 	@Override
 	public Pet update(Pet updatedPet) {
-		PetEntity updatedPetEntity = PetEntityTranslator.toPersistenceModel(updatedPet);
+		PetEntity updatedPetEntity = PetRepositoryImpl.translateToPersistenceModel(updatedPet);
 		PetEntity savedPetEntity = petEntityRepository.save(updatedPetEntity);
-		Pet savedPet = PetEntityTranslator.toDomainModel(savedPetEntity);
+		Pet savedPet = PetRepositoryImpl.translateToDomainModel(savedPetEntity);
 		return savedPet;
 	}
 
 	@Override
 	public Pet findById(Integer petId) {
 		PetEntity petEntity = petEntityRepository.findById(petId);
-		Pet pet = PetEntityTranslator.toDomainModel(petEntity);
+		Pet pet = PetRepositoryImpl.translateToDomainModel(petEntity);
 		return pet;
 	}
 
 	@Override
 	public Pet findWithVisitsById(Integer id) {
 		PetEntity petEntity = petEntityRepository.findWithVisitsById(id);
-		Pet pet = PetEntityTranslator.toDomainModel(petEntity);
+		Pet pet = PetRepositoryImpl.translateToDomainModel(petEntity);
 		return pet;
 	}
 
@@ -77,7 +77,7 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
 	public List<Pet> findAllByOwnerId(Integer ownerId) {
 		return petEntityRepository.findAllByOwnerId(ownerId)
 			.stream()
-			.map(PetEntityTranslator::toDomainModel)
+			.map(PetRepositoryImpl::translateToDomainModel)
 			.collect(Collectors.toList());
 	}
 
@@ -85,8 +85,46 @@ import org.springframework.samples.petclinic.pet.domain.PetType;
 	public List<PetType> findPetTypes() {
 		return petTypeEntityRepository.findAll()
 			.stream()
-			.map(PetTypeEntityTranslator::toDomainModel)
+			.map(PetRepositoryImpl::translateToDomainModel)
 			.collect(Collectors.toList());
+	}
+
+	static Pet translateToDomainModel(PetEntity petEntity) {
+		Pet pet = new Pet();
+		pet.setId(petEntity.getId());
+		pet.setOwnerId(petEntity.getOwnerId());
+		pet.setName(petEntity.getName());
+		pet.setBirthDate(petEntity.getBirthDate());
+		if (petEntity.getType() != null) {
+			pet.setType(PetRepositoryImpl.translateToDomainModel(petEntity.getType()));
+		}
+		if (petEntity.getVisits() != null) {
+			pet.setVisits(petEntity.getVisits()
+				.stream()
+				.map(VisitRepositoryImpl::translateToDomainModel)
+				.collect(Collectors.toList()));
+		}
+
+		return pet;
+	}
+
+	static PetType translateToDomainModel(PetTypeEntity petTypeEntity) {
+		PetType petType = new PetType();
+		petType.setId(petTypeEntity.getId());
+		petType.setName(petTypeEntity.getName());
+
+		return petType;
+	}
+
+ 	static PetEntity translateToPersistenceModel(Pet pet) {
+		PetEntity petEntity = new PetEntity();
+		petEntity.setId(pet.getId());
+		petEntity.setOwnerId(pet.getOwnerId());
+		petEntity.setName(pet.getName());
+		petEntity.setBirthDate(pet.getBirthDate());
+		petEntity.setTypeId(pet.getType().getId());
+
+		return petEntity;
 	}
 
 }

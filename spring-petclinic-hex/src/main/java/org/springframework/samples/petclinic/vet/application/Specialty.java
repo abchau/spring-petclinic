@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet.domain;
+package org.springframework.samples.petclinic.vet.application;
 
 /**
  * Models a {@link Vet Vet's} specialty (for example, dentistry).

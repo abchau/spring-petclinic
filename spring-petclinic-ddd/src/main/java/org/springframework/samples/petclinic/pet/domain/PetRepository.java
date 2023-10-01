@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * A DDD Repository (Don't confuse with Spring Data Repository)
  * A DDD Domain Service
- *
+
  * @author github.com/abchau
  */
 public interface PetRepository {

@@ -13,21 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.pet.domain;
+package org.springframework.samples.petclinic.pet.application;
+
+import java.time.LocalDate;
 
 /**
+ * Simple JavaBean domain object representing a visit.
+ *
  * @author github.com/abchau
  */
-public final class PetType {
+public final class Visit {
 
 	private Integer id;
 
-	private String name;
+	private Integer petId;
 
-	public static PetType of(Integer id) {
-		PetType petType = new PetType();
-		petType.id = id;
-		return petType;
+	private LocalDate date;
+
+	private String description;
+
+	public Visit() {
 	}
 
 	public Integer getId() {
@@ -38,17 +43,33 @@ public final class PetType {
 		this.id = id;
 	}
 
-	public String getName() {
-		return this.name;
+	public Integer getPetId() {
+		return petId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPetId(Integer petId) {
+		this.petId = petId;
+	}
+
+	public LocalDate getDate() {
+		return this.date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
 	public String toString() {
-		return "PetType [id=" + id + ", name=" + name + "]";
+		return "Visit [id=" + id + ", petId=" + petId + ", date=" + date + ", description=" + description + "]";
 	}
 
 }

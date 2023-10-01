@@ -30,7 +30,7 @@ import jakarta.persistence.Id;
  */
 @Entity
 @Table(name = "specialties")
-/*final*/ class SpecialtyEntity {
+class SpecialtyEntity {
 
 	@Id
 	@Column(name = "id")

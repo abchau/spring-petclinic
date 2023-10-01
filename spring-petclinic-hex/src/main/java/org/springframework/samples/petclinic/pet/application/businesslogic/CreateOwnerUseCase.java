@@ -1,18 +1,18 @@
 package org.springframework.samples.petclinic.pet.application.businesslogic;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.pet.application.Owner;
 import org.springframework.samples.petclinic.pet.application.drivenport.SaveOwnerPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.CreateOwnerPort;
-import org.springframework.samples.petclinic.pet.domain.Owner;
 import org.springframework.stereotype.Component;
 
 /**
- * Application Service
- *
  * @author github.com/abchau
  */
+@PrimaryAdapter
 @Component
-/*final*/ class CreateOwnerUseCase implements CreateOwnerPort {
+class CreateOwnerUseCase implements CreateOwnerPort {
 
 	private final SaveOwnerPort saveOwnerPort;
 

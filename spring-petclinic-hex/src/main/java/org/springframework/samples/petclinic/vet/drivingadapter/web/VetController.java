@@ -17,9 +17,10 @@ package org.springframework.samples.petclinic.vet.drivingadapter.web;
 
 import java.util.List;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
+import org.springframework.samples.petclinic.vet.application.Vet;
+import org.springframework.samples.petclinic.vet.application.Vet.PaginatedVet;
 import org.springframework.samples.petclinic.vet.application.drivingport.ShowVetPort;
-import org.springframework.samples.petclinic.vet.domain.Vet;
-import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +37,9 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  * @author Arjen Poutsma
  * @author github.com/abchau
  */
+@PrimaryAdapter
 @Controller
-/*final*/ class VetController {
+class VetController {
 
 	private final ShowVetPort showVetPort;
 

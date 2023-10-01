@@ -2,15 +2,20 @@ package org.springframework.samples.petclinic.vet.application.businesslogic;
 
 import java.util.List;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.vet.application.Vet;
+import org.springframework.samples.petclinic.vet.application.Vet.PaginatedVet;
 import org.springframework.samples.petclinic.vet.application.drivenadapter.LoadVetPort;
 import org.springframework.samples.petclinic.vet.application.drivingport.ShowVetPort;
-import org.springframework.samples.petclinic.vet.domain.Vet;
-import org.springframework.samples.petclinic.vet.domain.Vet.PaginatedVet;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author github.com/abchau
+ */
+@PrimaryAdapter
 @Component
-/*final*/ class ShowVetUseCase implements ShowVetPort {
+class ShowVetUseCase implements ShowVetPort {
 
 	private final LoadVetPort loadVetPort;
 

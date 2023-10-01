@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.pet.drivingadapter.web;
 
 import java.util.List;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,11 +34,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 
+import org.springframework.samples.petclinic.pet.application.Owner;
+import org.springframework.samples.petclinic.pet.application.Owner.PaginatedOwner;
 import org.springframework.samples.petclinic.pet.application.drivingport.CreateOwnerPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.ShowOwnerPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.UpdateOwnerPort;
-import org.springframework.samples.petclinic.pet.domain.Owner;
-import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 
 /**
  * @author Juergen Hoeller
@@ -46,8 +47,9 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
  * @author Michael Isvy
  * @author github.com/abchau
  */
+@PrimaryAdapter
 @Controller
-/*final*/ class OwnerController {
+class OwnerController {
 
 	private final ShowOwnerPort showOwnerPort;
 
@@ -148,7 +150,6 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 			return "redirect:/owners/{id}/edit";
 		}
 
-		// demostrates web layer validation
 		if (form.getId() != id) {
 			redirectAttributes.addFlashAttribute("form", form);
 			FieldError fieldError = new FieldError(Owner.class.getName(), "id", "gocha!");

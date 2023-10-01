@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.pet.drivingadapter.web;
 
 import java.util.List;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,11 +31,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 
+import org.springframework.samples.petclinic.pet.application.Pet;
 import org.springframework.samples.petclinic.pet.application.drivingport.CreatePetPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.ShowOwnerPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.ShowPetPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.UpdatePetPort;
-import org.springframework.samples.petclinic.pet.domain.Pet;
 
 /**
  * @author Juergen Hoeller
@@ -42,9 +43,10 @@ import org.springframework.samples.petclinic.pet.domain.Pet;
  * @author Arjen Poutsma
  * @author github.com/abchau
  */
+@PrimaryAdapter
 @Controller
 @RequestMapping("/owners/{ownerId}/pets")
-/*final*/ class PetController {
+class PetController {
 
 	private final ShowOwnerPort showOwnerPort;
 

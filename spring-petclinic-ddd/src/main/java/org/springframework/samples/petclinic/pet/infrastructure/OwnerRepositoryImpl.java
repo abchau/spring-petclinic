@@ -35,7 +35,7 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
  * @author github.com/abchau
  */
 @Service
-/*final*/ class OwnerRepositoryImpl implements OwnerRepository {
+class OwnerRepositoryImpl implements OwnerRepository {
 
 	private final OwnerEntityRepository ownerEntityRepository;
 
@@ -46,17 +46,17 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 
 	@Override
 	public Owner create(Owner newOwner) {
-		OwnerEntity newOwnerEntity = OwnerEntityTranslator.toPersistenceModel(newOwner);
+		OwnerEntity newOwnerEntity = OwnerRepositoryImpl.translateToPersistenceModel(newOwner);
 		OwnerEntity createdOwnerEntity = ownerEntityRepository.save(newOwnerEntity);
-		Owner savedOwner = OwnerEntityTranslator.toDomainModel(createdOwnerEntity);
+		Owner savedOwner = OwnerRepositoryImpl.translateToDomainModel(createdOwnerEntity);
 		return savedOwner;
 	}
 
 	@Override
 	public Owner update(Owner updatedOwner) {
-		OwnerEntity updatedOwnerEntity = OwnerEntityTranslator.toPersistenceModel(updatedOwner);
+		OwnerEntity updatedOwnerEntity = OwnerRepositoryImpl.translateToPersistenceModel(updatedOwner);
 		OwnerEntity savedOwnerEntity = ownerEntityRepository.save(updatedOwnerEntity);
-		Owner savedOwner = OwnerEntityTranslator.toDomainModel(savedOwnerEntity);
+		Owner savedOwner = OwnerRepositoryImpl.translateToDomainModel(savedOwnerEntity);
 		return savedOwner;
 	}
 
@@ -66,7 +66,7 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 		Page<OwnerEntity> jpaEntities = ownerEntityRepository.findByLastName(lastname, pageable);
 
 		List<Owner> owners = jpaEntities.stream()
-			.map(OwnerEntityTranslator::toDomainModel)
+			.map(OwnerRepositoryImpl::translateToDomainModel)
 			.collect(Collectors.toList());
 
 		Page<Owner> result = new PageImpl<Owner>(owners, pageable, jpaEntities.getTotalElements());
@@ -82,15 +82,42 @@ import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 	@Override
 	public Owner findById(Integer id) {
 		OwnerEntity ownerEntity = ownerEntityRepository.findById(id);
-		Owner owner = OwnerEntityTranslator.toDomainModel(ownerEntity);
+		Owner owner = OwnerRepositoryImpl.translateToDomainModel(ownerEntity);
 		return owner;
 	}
 
 	@Override
 	public Owner findWithPetsById(Integer id) {
 		OwnerEntity ownerEntity = ownerEntityRepository.findWithPetsById(id);
-		Owner owner = OwnerEntityTranslator.toDomainModel(ownerEntity);
+		Owner owner = OwnerRepositoryImpl.translateToDomainModel(ownerEntity);
 		return owner;
 	}
 
+	static Owner translateToDomainModel(OwnerEntity ownerEntity) {
+		Owner owner = new Owner();
+		owner.setId(ownerEntity.getId());
+		owner.setFirstName(ownerEntity.getFirstName());
+		owner.setLastName(ownerEntity.getLastName());
+		owner.setAddress(ownerEntity.getAddress());
+		owner.setCity(ownerEntity.getCity());
+		owner.setTelephone(ownerEntity.getTelephone());
+		if (ownerEntity.getPets() != null) {
+			owner.setPets(ownerEntity.getPets().stream()
+				.map(PetRepositoryImpl::translateToDomainModel)
+				.collect(Collectors.toList()));
+		}
+		return owner;
+	}
+
+	static OwnerEntity translateToPersistenceModel(Owner owner) {
+		OwnerEntity ownerEntity = new OwnerEntity();
+		ownerEntity.setId(owner.getId());
+		ownerEntity.setFirstName(owner.getFirstName());
+		ownerEntity.setLastName(owner.getLastName());
+		ownerEntity.setAddress(owner.getAddress());
+		ownerEntity.setCity(owner.getCity());
+		ownerEntity.setTelephone(owner.getTelephone());
+
+		return ownerEntity;
+	}
 }

@@ -4,91 +4,113 @@
 
 Derived from link:https://github.com/spring-projects/spring-petclinic[Spring PetClinic Sample Application]
 
-== Philosophy
+== Objectives
 
-* don't want to muddle the original repo
+* not to muddle with the original repo
 * not intend to provide a silver bullet
+* not to provide "production ready" code
 * not intend to demostrates how to write tests
-* only to provide examples 
 * minimal maintenance effort
 
 == Major changes compared to original
 
 * removed gradle
-* removed all tests as original tests are no longer relevant
+* removed check style
+* removed all tests
 * removed all Active Record style codes
-* removed all check style
 * removed all Hibernate Inheritance Mapping
 * chnaged all fetching strategies to LAZY
 * removed all cascade strategies
 * removed uses of `WebDataBinder`, `Validator`, and `@ModelAttribute` annotation at method level
-* applied PRG pattern
-* applied some basic error messages
 * reorganised packages
+* applied PRG pattern
+* added some basic error messages
+* added archiecture tests
 
 == How to use
 
 * download the repo
-* compare the four projects with a tool you like
+* compare the projects with a diff tool
 
 == Project Structures
 
-[cols="2,1,1,1,1,1,4", width="100%"]
+[cols="2,1,1,4", width="100%", options="header"]
 |===
 
-.2+h|Project
-3+h|Separation of Concern
-2+h|Dependency Inversion
-.2+h|Summary
-
-h|Input Model
-h|Domain Model
-h|Output Model
-h|Input
-h|Output
+|Project
+|Separation of Concern
+|Dependency
+|Summary
 
 |link:spring-petclinic-org[]
-|
-|
-|
-|
-|
+|No
+a|
+* Presentation -> Model -> Dao
+* Presentation -> Dao
+* Model <- Dao
+
 |Original before fork
 
 |link:spring-petclinic-layered[]
-|
-|
-|
-|Yfootnote:[DI attribute lost if web technologies (e.g. request, session, etc) leak into `"Service" Layer`]
-|
+|Some
+a|
+* Presentation -> Service -> Dao
+* Service -> Domain
+* Domain -> Dao
+* Domain <- Dao
 |Layered Architecture Example 
 
-Rewritten from Orginal to a typical Layered example where the same `Model` is used everywhere
-
-
+Rewritten from Orginal to usually how people approach traditional Layered Architecture. This is not the only form of traditional Layered Architecture.
 
 |link:spring-petclinic-hex[]
-
-|Yfootnote:[Didn't demostrate in the example]
-|Y
-|Y
-|Y
-|Y
+|Yes
+|Driving -> Application <- Driven
 a|Hexagonal Architecture Example
 
-|link:spring-petclinic-ddd[]
-|Y
-|Y
-|Y
-|Y
-|Y
-|A lazy but "good enough" DDD Architecture Example. 
+Rewritten from Layered Architecture Example
 
-Minimal personal favoured changes from layered example to achieve isolation
+|link:spring-petclinic-ddd[]
+|Yes
+|User Interface -> [Application -> Domain] <- Infrastructure
+|DDD Architecture (Clean/Onion)
+
+Rewritten from Layered Architecture Example 
 
 |===
 
+== Layering
+
+[cols="1,1,1,1,1", width="100%", options="header"]
+|===
+
+|Type
+4+|Layers
+
+|Original
+4+|Kind of Vertically sliced
+
+|Layered
+|Presentation
+|Service
+|Model
+|Data Access
+
+|Hexagonal
+|Driving
+|Application
+|Entities
+|Driven
+
+|DDD
+|User Interface
+|Application
+|Domain
+|Infrastructure
+
+|===
+
+
 [Notes]
 ====
-* Everything in a `domain` package, including sub packages, together is a Domain Model. An object like the `Pet` object alone is NOT the Domain Model but an object model inside a Domain Model
+* In DDD, everything in a `domain` package, including sub packages, together is a Domain Model. An object like the `Pet` object alone is NOT the Domain Model but a domain object inside a Domain Model
 ====

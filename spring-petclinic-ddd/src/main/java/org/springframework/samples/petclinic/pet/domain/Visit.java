@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 /**
  * Simple JavaBean domain object representing a visit.
- *
+
  * @author github.com/abchau
  */
 public final class Visit {

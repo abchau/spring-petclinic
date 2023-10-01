@@ -45,7 +45,7 @@ import jakarta.persistence.Id;
 @Entity
 @NamedEntityGraph(name = "PetEntity.visits", attributeNodes = @NamedAttributeNode("visits"))
 @Table(name = "pets")
-/*final*/ class PetEntity {
+class PetEntity {
 
 	@Id
 	@Column(name = "id")

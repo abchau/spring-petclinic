@@ -2,14 +2,16 @@ package org.springframework.samples.petclinic.pet.application.drivingport;
 
 import java.util.List;
 
-import org.springframework.samples.petclinic.pet.domain.Pet;
-import org.springframework.samples.petclinic.pet.domain.PetType;
+import org.jmolecules.architecture.hexagonal.PrimaryPort;
+import org.springframework.samples.petclinic.pet.application.Pet;
+import org.springframework.samples.petclinic.pet.application.PetType;
 
 /**
  * Domain API
  *
  * @author github.com/abchau
  */
+@PrimaryPort
 public interface ShowPetPort {
 
 	public List<Pet> findAllByOwnerId(Integer ownerId);

@@ -1,15 +1,16 @@
 package org.springframework.samples.petclinic.pet.application.drivenport;
 
 import java.util.List;
-
-import org.springframework.samples.petclinic.pet.domain.Pet;
-import org.springframework.samples.petclinic.pet.domain.PetType;
+import org.jmolecules.architecture.hexagonal.SecondaryPort;
+import org.springframework.samples.petclinic.pet.application.Pet;
+import org.springframework.samples.petclinic.pet.application.PetType;
 
 /**
  * Domain SPI
  *
  * @author github.com/abchau
  */
+@SecondaryPort
 public interface LoadPetPort {
 
 	public Pet findById(Integer petId);

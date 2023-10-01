@@ -3,14 +3,15 @@ package org.springframework.samples.petclinic.pet.drivenadapter.persistence;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.pet.application.Owner;
+import org.springframework.samples.petclinic.pet.application.Owner.PaginatedOwner;
 import org.springframework.samples.petclinic.pet.application.drivenport.LoadOwnerPort;
 import org.springframework.samples.petclinic.pet.application.drivenport.SaveOwnerPort;
-import org.springframework.samples.petclinic.pet.domain.Owner;
-import org.springframework.samples.petclinic.pet.domain.Owner.PaginatedOwner;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author github.com/abchau
  */
+@SecondaryAdapter
 @Service
-/*final*/ class OwnerPersistenceAdapter implements LoadOwnerPort, SaveOwnerPort {
+class OwnerPersistenceAdapter implements LoadOwnerPort, SaveOwnerPort {
 
 	private final OwnerEntityRepository ownerEntityRepository;
 
@@ -31,9 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 	@Override
 	@Transactional
 	public Owner create(Owner newOwner) {
-		OwnerEntity newOwnerEntity = OwnerEntityTranslator.toPersistenceModel(newOwner);
+		OwnerEntity newOwnerEntity = translateToPersistenceModel(newOwner);
 		OwnerEntity createdOwnerEntity = ownerEntityRepository.save(newOwnerEntity);
-		Owner savedOwner = OwnerEntityTranslator.toDomainModel(createdOwnerEntity);
+		Owner savedOwner = translateToDomainModel(createdOwnerEntity);
 		return savedOwner;
 	}
 
@@ -49,7 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 		OwnerEntity savedOwnerEntity = ownerEntityRepository.save(ownerEntity);
 
-		Owner savedOwner = OwnerEntityTranslator.toDomainModel(savedOwnerEntity);
+		Owner savedOwner = translateToDomainModel(savedOwnerEntity);
 		return savedOwner;
 	}
 
@@ -60,7 +62,7 @@ import org.springframework.transaction.annotation.Transactional;
 		Page<OwnerEntity> jpaEntities = ownerEntityRepository.findByLastName(lastname, pageable);
 
 		List<Owner> owners = jpaEntities.stream()
-			.map(OwnerEntityTranslator::toDomainModel)
+			.map(OwnerPersistenceAdapter::translateToDomainModel)
 			.collect(Collectors.toList());
 
 		Page<Owner> result = new PageImpl<Owner>(owners, pageable, jpaEntities.getTotalElements());
@@ -77,7 +79,7 @@ import org.springframework.transaction.annotation.Transactional;
 	@Transactional(readOnly = true)
 	public Owner findById(Integer ownerId) {
 		OwnerEntity ownerEntity = ownerEntityRepository.findById(ownerId);
-		Owner owner = OwnerEntityTranslator.toDomainModel(ownerEntity);
+		Owner owner = translateToDomainModel(ownerEntity);
 		return owner;
 	}
 
@@ -85,8 +87,36 @@ import org.springframework.transaction.annotation.Transactional;
 	@Transactional(readOnly = true)
 	public Owner findWithPetsById(Integer ownerId) {
 		OwnerEntity ownerEntity = ownerEntityRepository.findWithPetsById(ownerId);
-		Owner owner = OwnerEntityTranslator.toDomainModel(ownerEntity);
+		Owner owner = translateToDomainModel(ownerEntity);
 		return owner;
 	}
 
+	static Owner translateToDomainModel(OwnerEntity ownerEntity) {
+		Owner owner = new Owner();
+		owner.setId(ownerEntity.getId());
+		owner.setFirstName(ownerEntity.getFirstName());
+		owner.setLastName(ownerEntity.getLastName());
+		owner.setAddress(ownerEntity.getAddress());
+		owner.setCity(ownerEntity.getCity());
+		owner.setTelephone(ownerEntity.getTelephone());
+		if (ownerEntity.getPets() != null) {
+			owner.setPets(
+				ownerEntity.getPets().stream()
+					.map(PetPersistenceAdapter::translateToDomainModel)
+					.collect(Collectors.toList()));
+		}
+		return owner;
+	}
+
+	static OwnerEntity translateToPersistenceModel(Owner owner) {
+		OwnerEntity ownerEntity = new OwnerEntity();
+		ownerEntity.setId(owner.getId());
+		ownerEntity.setFirstName(owner.getFirstName());
+		ownerEntity.setLastName(owner.getLastName());
+		ownerEntity.setAddress(owner.getAddress());
+		ownerEntity.setCity(owner.getCity());
+		ownerEntity.setTelephone(owner.getTelephone());
+
+		return ownerEntity;
+	}
 }

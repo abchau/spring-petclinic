@@ -23,7 +23,7 @@ import org.springframework.core.style.ToStringCreator;
 
 /**
  * Simple JavaBean domain object representing an owner.
- *
+
  * @author github.com/abchau
  */
 public final class Owner {

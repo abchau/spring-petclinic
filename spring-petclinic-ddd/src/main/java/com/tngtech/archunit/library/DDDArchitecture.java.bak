@@ -1,0 +1,379 @@
+package com.tngtech.archunit.library;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+
+import com.tngtech.archunit.base.DescribedPredicate;
+import com.tngtech.archunit.core.domain.Dependency;
+import com.tngtech.archunit.core.domain.JavaClass;
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.domain.PackageMatcher;
+import com.tngtech.archunit.core.domain.properties.HasName;
+import com.tngtech.archunit.lang.ArchCondition;
+import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.ConditionEvents;
+import com.tngtech.archunit.lang.EvaluationResult;
+import com.tngtech.archunit.lang.Priority;
+import com.tngtech.archunit.lang.syntax.PredicateAggregator;
+import com.tngtech.archunit.library.Architectures.LayeredArchitecture.DependencySettings;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.tngtech.archunit.PublicAPI.Usage.ACCESS;
+import static com.tngtech.archunit.base.DescribedPredicate.alwaysFalse;
+import static com.tngtech.archunit.base.DescribedPredicate.not;
+import static com.tngtech.archunit.base.DescribedPredicate.or;
+import static com.tngtech.archunit.core.domain.Dependency.Functions.GET_ORIGIN_CLASS;
+import static com.tngtech.archunit.core.domain.Dependency.Functions.GET_TARGET_CLASS;
+import static com.tngtech.archunit.core.domain.Dependency.Predicates.dependency;
+import static com.tngtech.archunit.core.domain.Dependency.Predicates.dependencyOrigin;
+import static com.tngtech.archunit.core.domain.Dependency.Predicates.dependencyTarget;
+import static com.tngtech.archunit.core.domain.Formatters.joinSingleQuoted;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.equivalentTo;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAnyPackage;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideOutsideOfPackages;
+import static com.tngtech.archunit.core.domain.properties.HasName.Predicates.name;
+import static com.tngtech.archunit.lang.SimpleConditionEvent.violated;
+import static com.tngtech.archunit.lang.conditions.ArchConditions.onlyHaveDependenciesWhere;
+import static com.tngtech.archunit.lang.conditions.ArchConditions.onlyHaveDependentsWhere;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static java.lang.System.lineSeparator;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singleton;
+import static java.util.stream.Collectors.toSet;
+
+/**
+ * Slightly modified from <code>com.tngtech.archunit.library.Architectures.OnionArchitecture</code>
+ *
+ * @author github.com/TNG
+ * @author github.com/abchau
+ *
+ */
+public final class DDDArchitecture implements ArchRule {
+    private static final String DOMAIN_MODEL_LAYER = "domain model";
+    private static final String APPLICATION_SERVICE_LAYER = "application service";
+    private static final String USER_INTERFACE_LAYER = "user interface";
+    private static final String INFRASTRUCTURE_LAYER = "infrastructure";
+    private final Optional<String> overriddenDescription;
+    private Optional<DescribedPredicate<? super JavaClass>> domainModelPredicate = Optional.empty();
+    private Optional<DescribedPredicate<? super JavaClass>> applicationPredicate = Optional.empty();
+    private Map<String, DescribedPredicate<? super JavaClass>> userInterfacePredicates = new LinkedHashMap<>();
+    private Map<String, DescribedPredicate<? super JavaClass>> infrastructurePredicates = new LinkedHashMap<>();
+    private boolean optionalLayers = false;
+    private List<IgnoredDependency> ignoredDependencies = new ArrayList<>();
+    private AllClassesAreContainedInArchitectureCheck allClassesAreContainedInArchitectureCheck = new AllClassesAreContainedInArchitectureCheck.Disabled();
+    private DDDArchitecture() {
+        overriddenDescription = Optional.empty();
+    }
+    private DDDArchitecture(
+            Optional<DescribedPredicate<? super JavaClass>> domainModelPredicate,
+            Optional<DescribedPredicate<? super JavaClass>> applicationPredicate,
+            Map<String, DescribedPredicate<? super JavaClass>> userInterfacePredicates,
+            Map<String, DescribedPredicate<? super JavaClass>> adapterPredicates,
+            List<IgnoredDependency> ignoredDependencies,
+            Optional<String> overriddenDescription) {
+        this.domainModelPredicate = domainModelPredicate;
+        this.applicationPredicate = applicationPredicate;
+        this.userInterfacePredicates = userInterfacePredicates;
+        this.infrastructurePredicates = infrastructurePredicates;
+        this.ignoredDependencies = ignoredDependencies;
+        this.overriddenDescription = overriddenDescription;
+    }
+
+    /**
+     * Defines which classes belong to domain models by matching them against {@link PackageMatcher package identifiers}.
+     * @param packageIdentifiers {@link PackageMatcher package identifiers} defining which classes belong to domain models
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture domainModels(String... packageIdentifiers) {
+        return domainModels(byPackagePredicate(packageIdentifiers));
+    }
+    /**
+     * Defines which classes belong to domain models by matching them against the supplied {@link DescribedPredicate predicate}.
+     * <br><br>
+     * Note that many predefined {@link DescribedPredicate predicates} can be found within a subclass {@code Predicates} of the
+     * respective domain object or a common ancestor. For example, {@link DescribedPredicate predicates} targeting
+     * {@link JavaClass} can be found within {@link JavaClass.Predicates} or one of the respective ancestors like {@link HasName.Predicates}.
+     * @param predicate A {@link DescribedPredicate} defining which classes belong to domain models
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture domainModels(DescribedPredicate<? super JavaClass> predicate) {
+        domainModelPredicate = Optional.of(predicate);
+        return this;
+    }
+    /**
+     * Defines which classes belong to application services by matching them against {@link PackageMatcher package identifiers}.
+     *
+     * @param packageIdentifiers {@link PackageMatcher package identifiers} defining which classes belong to application services
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture applicationServices(String... packageIdentifiers) {
+        return applicationServices(byPackagePredicate(packageIdentifiers));
+    }
+    /**
+     * Defines which classes belong to application services by matching them against the supplied {@link DescribedPredicate predicate}.
+     * <br><br>
+     * Note that many predefined {@link DescribedPredicate predicates} can be found within a subclass {@code Predicates} of the
+     * respective domain object or a common ancestor. For example, {@link DescribedPredicate predicates} targeting
+     * {@link JavaClass} can be found within {@link JavaClass.Predicates} or one of the respective ancestors like {@link HasName.Predicates}.
+     * @param predicate A {@link DescribedPredicate} defining which classes belong to application services
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture applicationServices(DescribedPredicate<? super JavaClass> predicate) {
+        applicationPredicate = Optional.of(predicate);
+        return this;
+    }
+    /**
+     * Defines which classes belong to a specific User Interface adapter by matching them against {@link PackageMatcher package identifiers}.
+     *
+     * @param name The name of the User Interface adapter
+     * @param packageIdentifiers {@link PackageMatcher package identifiers} defining which classes belong to the User Interface adapter
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture userInterfaces(String name, String... packageIdentifiers) {
+        return userInterfaces(name, byPackagePredicate(packageIdentifiers));
+    }
+    /**
+     * Defines which classes belong to a specific User Interface adapter by matching them against the supplied {@link DescribedPredicate predicate}.
+     * <br><br>
+     * Note that many predefined {@link DescribedPredicate predicates} can be found within a subclass {@code Predicates} of the
+     * respective domain object or a common ancestor. For example, {@link DescribedPredicate predicates} targeting
+     * {@link JavaClass} can be found within {@link JavaClass.Predicates} or one of the respective ancestors like {@link HasName.Predicates}.
+     *
+     * @param name The name of the User Interface adapter
+     * @param predicate A {@link DescribedPredicate} defining which classes belong to the User Interface adapter
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture userInterfaces(String name, DescribedPredicate<? super JavaClass> predicate) {
+        userInterfacePredicates.put(name, predicate);
+        return this;
+    }
+    /**
+     * Defines which classes belong to a specific Infrastructure adapter by matching them against {@link PackageMatcher package identifiers}.
+     *
+     * @param name The name of the Infrastructure adapter
+     * @param packageIdentifiers {@link PackageMatcher package identifiers} defining which classes belong to the Infrastructure adapter
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture infrastructures(String name, String... packageIdentifiers) {
+        return infrastructures(name, byPackagePredicate(packageIdentifiers));
+    }
+    /**
+     * Defines which classes belong to a specific Infrastructure adapter by matching them against the supplied {@link DescribedPredicate predicate}.
+     * <br><br>
+     * Note that many predefined {@link DescribedPredicate predicates} can be found within a subclass {@code Predicates} of the
+     * respective domain object or a common ancestor. For example, {@link DescribedPredicate predicates} targeting
+     * {@link JavaClass} can be found within {@link JavaClass.Predicates} or one of the respective ancestors like {@link HasName.Predicates}.
+     *
+     * @param name The name of the Infrastructure adapter
+     * @param predicate A {@link DescribedPredicate} defining which classes belong to the Infrastructure adapter
+     * @return The {@link DDDArchitecture} to be checked against classes or further customized
+     */
+    public DDDArchitecture infrastructures(String name, DescribedPredicate<? super JavaClass> predicate) {
+        infrastructurePredicates.put(name, predicate);
+        return this;
+    }
+    /**
+     * @param optionalLayers Whether the different parts of the DDD Architecture (domain models, ...) should be allowed to be empty.
+     *                       If set to {@code false} the {@link DDDArchitecture DDDArchitecture} will fail if any such layer does not contain any class.
+     */
+    public DDDArchitecture withOptionalLayers(boolean optionalLayers) {
+        this.optionalLayers = optionalLayers;
+        return this;
+    }
+    /**
+     * Ignores all {@link Dependency dependencies} that have an {@link Dependency#getOriginClass() origin class}
+     * {@link JavaClass#isEquivalentTo(Class) equivalent to} the supplied {@code origin} and {@link Dependency#getTargetClass() target class}
+     * {@link JavaClass#isEquivalentTo(Class) equivalent to} the supplied {@code target}.
+     */
+    public DDDArchitecture ignoreDependency(Class<?> origin, Class<?> target) {
+        return ignoreDependency(equivalentTo(origin), equivalentTo(target));
+    }
+    /**
+     * Ignores all {@link Dependency dependencies} that have an {@link Dependency#getOriginClass() origin class}
+     * with fully qualified class name {@code origin} and {@link Dependency#getTargetClass() target class}
+     * with fully qualified class name {@code target}.
+     */
+    public DDDArchitecture ignoreDependency(String origin, String target) {
+        return ignoreDependency(name(origin), name(target));
+    }
+    /**
+     * Ignores all {@link Dependency dependencies} that have an {@link Dependency#getOriginClass() origin class}
+     * matching the supplied {@code origin} {@link DescribedPredicate predicate} and {@link Dependency#getTargetClass() target class}
+     * matching the supplied {@code target} {@link DescribedPredicate predicate}.
+     * <br><br>
+     * Note that many predefined {@link DescribedPredicate predicates} can be found within a subclass {@code Predicates} of the
+     * respective domain object or a common ancestor. For example, {@link DescribedPredicate predicates} targeting
+     * {@link JavaClass} can be found within {@link JavaClass.Predicates} or one of the respective ancestors like {@link HasName.Predicates}.
+     */
+    public DDDArchitecture ignoreDependency(DescribedPredicate<? super JavaClass> origin, DescribedPredicate<? super JavaClass> target) {
+        this.ignoredDependencies.add(new IgnoredDependency(origin, target));
+        return this;
+    }
+    /**
+     * Ensure that all classes under test are contained within a defined DDD architecture component.
+     *
+     * @see #ensureAllClassesAreContainedInArchitectureIgnoring(String...)
+     * @see #ensureAllClassesAreContainedInArchitectureIgnoring(DescribedPredicate)
+     */
+    public DDDArchitecture ensureAllClassesAreContainedInArchitecture() {
+        return ensureAllClassesAreContainedInArchitectureIgnoring(alwaysFalse());
+    }
+    /**
+     * Like {@link #ensureAllClassesAreContainedInArchitecture()} but will ignore classes in packages matching
+     * the specified {@link PackageMatcher packageIdentifiers}.
+     *
+     * @param packageIdentifiers {@link PackageMatcher packageIdentifiers} specifying which classes may live outside the architecture
+     *
+     * @see #ensureAllClassesAreContainedInArchitecture()
+     * @see #ensureAllClassesAreContainedInArchitectureIgnoring(DescribedPredicate)
+     */
+    public DDDArchitecture ensureAllClassesAreContainedInArchitectureIgnoring(String... packageIdentifiers) {
+        return ensureAllClassesAreContainedInArchitectureIgnoring(resideInAnyPackage(packageIdentifiers));
+    }
+    /**
+     * Like {@link #ensureAllClassesAreContainedInArchitecture()} but will ignore classes in packages matching
+     * the specified {@link DescribedPredicate predicate}.
+     * <br><br>
+     * Note that many predefined {@link DescribedPredicate predicates} can be found within a subclass {@code Predicates} of the
+     * respective domain object or a common ancestor. For example, {@link DescribedPredicate predicates} targeting
+     * {@link JavaClass} can be found within {@link JavaClass.Predicates} or one of the respective ancestors like {@link HasName.Predicates}.
+     *
+     * @param predicate {@link DescribedPredicate predicate} specifying which classes may live outside the architecture
+     *
+     * @see #ensureAllClassesAreContainedInArchitecture()
+     * @see #ensureAllClassesAreContainedInArchitectureIgnoring(String...)
+     */
+    public DDDArchitecture ensureAllClassesAreContainedInArchitectureIgnoring(DescribedPredicate<? super JavaClass> predicate) {
+        allClassesAreContainedInArchitectureCheck = new AllClassesAreContainedInArchitectureCheck.Enabled(predicate);
+        return this;
+    }
+    private DescribedPredicate<JavaClass> byPackagePredicate(String[] packageIdentifiers) {
+        return resideInAnyPackage(packageIdentifiers).as(joinSingleQuoted(packageIdentifiers));
+    }
+    private LayeredArchitecture layeredArchitectureDelegate() {
+        LayeredArchitecture layeredArchitectureDelegate = layeredArchitecture().consideringAllDependencies()
+                .layer(DOMAIN_MODEL_LAYER).definedBy(domainModelPredicate.orElse(alwaysFalse()))
+                .layer(APPLICATION_SERVICE_LAYER).definedBy(applicationPredicate.orElse(alwaysFalse()))
+                .layer(USER_INTERFACE_LAYER).definedBy(or(userInterfacePredicates.values()))
+                .layer(INFRASTRUCTURE_LAYER).definedBy(or(infrastructurePredicates.values()))
+                .whereLayer(DOMAIN_MODEL_LAYER).mayOnlyBeAccessedByLayers(DOMAIN_SERVICE_LAYER, APPLICATION_SERVICE_LAYER, USER_INTERFACE_LAYER, INFRASTRUCTURE_LAYER)
+                .whereLayer(DOMAIN_SERVICE_LAYER).mayOnlyBeAccessedByLayers(APPLICATION_SERVICE_LAYER)
+                .whereLayer(APPLICATION_SERVICE_LAYER).mayOnlyBeAccessedByLayers(USER_INTERFACE_LAYER)
+                .whereLayer(INFRASTRUCTURE_LAYER).mayOnlyBeAccessedByLayers(DOMAIN_MODEL_LAYER)
+                .withOptionalLayers(optionalLayers);
+        for (Map.Entry<String, DescribedPredicate<? super JavaClass>> adapter : userInterfacePredicates.entrySet()) {
+            String adapterLayer = getUserInterfaceLayer(adapter.getKey());
+            layeredArchitectureDelegate = layeredArchitectureDelegate
+                    .layer(adapterLayer).definedBy(adapter.getValue())
+                    .whereLayer(adapterLayer).mayNotBeAccessedByAnyLayer();
+        }
+        for (Map.Entry<String, DescribedPredicate<? super JavaClass>> adapter : infrastructurePredicates.entrySet()) {
+            String adapterLayer = getInfrastructureLayer(adapter.getKey());
+            layeredArchitectureDelegate = layeredArchitectureDelegate
+                    .layer(adapterLayer).definedBy(adapter.getValue())
+                    .whereLayer(adapterLayer).mayNotBeAccessedByAnyLayer();
+        }
+        for (IgnoredDependency ignoredDependency : this.ignoredDependencies) {
+            layeredArchitectureDelegate = ignoredDependency.ignoreFor(layeredArchitectureDelegate);
+        }
+        layeredArchitectureDelegate = allClassesAreContainedInArchitectureCheck.configure(layeredArchitectureDelegate);
+        return layeredArchitectureDelegate.as(getDescription());
+    }
+    private String getUserInterfaceLayer(String name) {
+        return String.format("%s %s", name, USER_INTERFACE_LAYER);
+    }
+    private String getInfrastructureLayer(String name) {
+        return String.format("%s %s", name, INFRASTRUCTURE_LAYER);
+    }
+    @Override
+    public void check(JavaClasses classes) {
+        layeredArchitectureDelegate().check(classes);
+    }
+    @Override
+    public ArchRule because(String reason) {
+        return ArchRule.Factory.withBecause(this, reason);
+    }
+    /**
+     * This method is equivalent to calling {@link #withOptionalLayers(boolean)}, which should be preferred in this context
+     * as the meaning is easier to understand.
+     */
+    @Override
+    public ArchRule allowEmptyShould(boolean allowEmptyShould) {
+        return withOptionalLayers(allowEmptyShould);
+    }
+    @Override
+    public DDDArchitecture as(String newDescription) {
+        return new DDDArchitecture(domainModelPredicate, applicationPredicate, 
+				userInterfacePredicates, infrastructurePredicates, ignoredDependencies,
+                Optional.of(newDescription));
+    }
+    @Override
+    public EvaluationResult evaluate(JavaClasses classes) {
+        return layeredArchitectureDelegate().evaluate(classes);
+    }
+    @Override
+    public String getDescription() {
+        if (overriddenDescription.isPresent()) {
+            return overriddenDescription.get();
+        }
+        List<String> lines = newArrayList("DDD architecture consisting of" + (optionalLayers ? " (optional)" : ""));
+        domainModelPredicate.ifPresent(describedPredicate ->
+                lines.add(String.format("domain models (%s)", describedPredicate.getDescription())));
+        applicationPredicate.ifPresent(describedPredicate ->
+                lines.add(String.format("application services (%s)", describedPredicate.getDescription())));
+        for (Map.Entry<String, DescribedPredicate<? super JavaClass>> adapter : userInterfacePredicates.entrySet()) {
+            lines.add(String.format("user interface '%s' (%s)", adapter.getKey(), adapter.getValue().getDescription()));
+        }
+        for (Map.Entry<String, DescribedPredicate<? super JavaClass>> adapter : infrastructurePredicates.entrySet()) {
+            lines.add(String.format("infrastructure '%s' (%s)", adapter.getKey(), adapter.getValue().getDescription()));
+        }
+        return String.join(lineSeparator(), lines);
+    }
+    @Override
+    public String toString() {
+        return getDescription();
+    }
+    private static class IgnoredDependency {
+        private final DescribedPredicate<? super JavaClass> origin;
+        private final DescribedPredicate<? super JavaClass> target;
+        IgnoredDependency(DescribedPredicate<? super JavaClass> origin, DescribedPredicate<? super JavaClass> target) {
+            this.origin = origin;
+            this.target = target;
+        }
+        LayeredArchitecture ignoreFor(LayeredArchitecture layeredArchitecture) {
+            return layeredArchitecture.ignoreDependency(origin, target);
+        }
+    }
+    private abstract static class AllClassesAreContainedInArchitectureCheck {
+        abstract LayeredArchitecture configure(LayeredArchitecture layeredArchitecture);
+        static class Enabled extends AllClassesAreContainedInArchitectureCheck {
+            private final DescribedPredicate<? super JavaClass> ignorePredicate;
+            private Enabled(DescribedPredicate<? super JavaClass> ignorePredicate) {
+                this.ignorePredicate = ignorePredicate;
+            }
+            @Override
+            LayeredArchitecture configure(LayeredArchitecture layeredArchitecture) {
+                return layeredArchitecture.ensureAllClassesAreContainedInArchitectureIgnoring(ignorePredicate);
+            }
+        }
+        static class Disabled extends AllClassesAreContainedInArchitectureCheck {
+            @Override
+            LayeredArchitecture configure(LayeredArchitecture layeredArchitecture) {
+                return layeredArchitecture;
+            }
+        }
+    }
+}

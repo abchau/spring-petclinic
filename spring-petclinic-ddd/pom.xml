@@ -26,6 +26,7 @@
     <jacoco.version>0.8.8</jacoco.version>
     <spring-format.version>0.0.38</spring-format.version>
 
+	<jmolecules.version>1.6.0</jmolecules.version>
   </properties>
 
   <dependencies>
@@ -110,6 +111,19 @@
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
+
+	<dependency>
+		<groupId>org.jmolecules</groupId>
+		<artifactId>jmolecules-layered-architecture</artifactId>
+		<version>1.6.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.tngtech.archunit</groupId>
+		<artifactId>archunit-junit5</artifactId>
+		<version>1.1.0</version>
+		<scope>test</scope>
+	</dependency>
   </dependencies>
 
   <build>

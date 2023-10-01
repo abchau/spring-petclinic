@@ -1,23 +1,23 @@
 package org.springframework.samples.petclinic.pet.application.businesslogic;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.pet.application.Visit;
 import org.springframework.samples.petclinic.pet.application.drivenport.SaveVisitPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.AddVisitPort;
-import org.springframework.samples.petclinic.pet.domain.Visit;
 import org.springframework.stereotype.Component;
 
 /**
- * Application Service
- *
  * @author github.com/abchau
  */
+@PrimaryAdapter
 @Component
-/*final*/ class AddVisitUseCase implements AddVisitPort {
+class ArchitectureTests implements AddVisitPort {
 
 	private final SaveVisitPort saveVisitPort;
 
 	@Autowired
-	public AddVisitUseCase(SaveVisitPort saveVisitPort) {
+	public ArchitectureTests(SaveVisitPort saveVisitPort) {
 		this.saveVisitPort = saveVisitPort;
 	}
 

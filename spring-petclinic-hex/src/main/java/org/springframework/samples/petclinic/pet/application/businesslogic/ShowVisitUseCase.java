@@ -2,19 +2,19 @@ package org.springframework.samples.petclinic.pet.application.businesslogic;
 
 import java.util.List;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.pet.application.Visit;
 import org.springframework.samples.petclinic.pet.application.drivenport.LoadVisitPort;
 import org.springframework.samples.petclinic.pet.application.drivingport.ShowVisitPort;
-import org.springframework.samples.petclinic.pet.domain.Visit;
 import org.springframework.stereotype.Component;
 
 /**
- * Application Service
- *
  * @author github.com/abchau
  */
+@PrimaryAdapter
 @Component
-/*final*/ class ShowVisitUseCase implements ShowVisitPort {
+class ShowVisitUseCase implements ShowVisitPort {
 
 	private final LoadVisitPort loadVisitPort;
 

@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.pet.domain.PetType;
 import org.springframework.samples.petclinic.pet.domain.Visit;
 import org.springframework.samples.petclinic.pet.domain.VisitRepository;
 
@@ -29,7 +30,7 @@ import org.springframework.samples.petclinic.pet.domain.VisitRepository;
  * @author github.com/abchau
  */
 @Service
-/*final*/ class VisitRepositoryImpl implements VisitRepository {
+class VisitRepositoryImpl implements VisitRepository {
 
 	private final VisitEntityRepository visitEntityRepository;
 
@@ -40,9 +41,9 @@ import org.springframework.samples.petclinic.pet.domain.VisitRepository;
 
 	@Override
 	public Visit create(Visit newVisit) {
-		VisitEntity newVisitEntity = VisitEntityTranslator.toPersistenceModel(newVisit);
+		VisitEntity newVisitEntity = VisitRepositoryImpl.translateToPersistenceModel(newVisit);
 		VisitEntity savedVisitEntity = visitEntityRepository.save(newVisitEntity);
-		Visit savedVisit = VisitEntityTranslator.toDomainModel(savedVisitEntity);
+		Visit savedVisit = VisitRepositoryImpl.translateToDomainModel(savedVisitEntity);
 		return savedVisit;
 	}
 
@@ -50,8 +51,36 @@ import org.springframework.samples.petclinic.pet.domain.VisitRepository;
 	public List<Visit> findAllByPetId(Integer petId) {
 		return visitEntityRepository.findAllByPetId(petId)
 			.stream()
-			.map(VisitEntityTranslator::toDomainModel)
+			.map(VisitRepositoryImpl::translateToDomainModel)
 			.collect(Collectors.toList());
+	}
+
+	static Visit translateToDomainModel(VisitEntity visitEntity) {
+		Visit visit = new Visit();
+		visit.setId(visitEntity.getId());
+		visit.setPetId(visitEntity.getPetId());
+		visit.setDate(visitEntity.getDate());
+		visit.setDescription(visitEntity.getDescription());
+
+		return visit;
+	}
+
+	static VisitEntity translateToPersistenceModel(Visit visit) {
+		VisitEntity visitEntity = new VisitEntity();
+		visitEntity.setId(visit.getId());
+		visitEntity.setPetId(visit.getPetId());
+		visitEntity.setDate(visit.getDate());
+		visitEntity.setDescription(visit.getDescription());
+
+		return visitEntity;
+	}
+
+	static PetType translateToDomainModel(PetTypeEntity petTypeEntity) {
+		PetType petType = new PetType();
+		petType.setId(petTypeEntity.getId());
+		petType.setName(petTypeEntity.getName());
+
+		return petType;
 	}
 
 }

@@ -1,12 +1,14 @@
 package org.springframework.samples.petclinic.pet.application.drivenport;
 
-import org.springframework.samples.petclinic.pet.domain.Owner;
+import org.jmolecules.architecture.hexagonal.SecondaryPort;
+import org.springframework.samples.petclinic.pet.application.Owner;
 
 /**
  * Domain SPI
  *
  * @author github.com/abchau
  */
+@SecondaryPort
 public interface SaveOwnerPort {
 
 	public Owner create(Owner owner);
