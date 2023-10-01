@@ -1,4 +1,4 @@
-= Hexagonal and DDD Examples based on Spring PetClinic Sample Application
+= Spring PetClinic Sample Application: additional examples on Layered, Hexagonal and DDD (Clean/Onion)
 
 == Origin
 
@@ -80,20 +80,23 @@ Rewritten from Layered Architecture Example
 
 == Layering
 
-[cols="1,1,1,1,1", width="100%", options="header"]
+[cols="1,1,1,1,1,1", width="100%", options="header"]
 |===
 
 |Type
 4+|Layers
+|Remarks
 
 |Original
 4+|Kind of Vertically sliced
+|
 
 |Layered
 |Presentation
 |Service
 |Model
 |Data Access
+.3+|These are essentically the same concept with different names
 
 |Hexagonal
 |Driving
