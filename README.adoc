@@ -100,8 +100,7 @@ Rewritten from Layered Architecture Example
 
 |Hexagonal
 |Driving
-|Application
-|Entities
+2+|Application
 |Driven
 
 |DDD
