@@ -29,8 +29,11 @@ Derived from link:https://github.com/spring-projects/spring-petclinic[Spring Pet
 
 == How to use
 
-* download the repo
-* compare the projects with a diff tool
+. download the repo
+. read and understand the original structure in link:spring-petclinic-org[] or the original repo at link:https://github.com/spring-projects/spring-petclinic[]
+. compare link:spring-petclinic-org[] with the changes in link:spring-petclinic-layered[]
+. compare link:spring-petclinic-layered[] with the changes in link:spring-petclinic-hex[]
+. compare link:spring-petclinic-layered[] with the changes in link:spring-petclinic-ddd[]
 
 == Project Structures
 
@@ -103,7 +106,7 @@ Rewritten from Layered Architecture Example
 2+|Application
 |Driven
 
-|DDD
+|DDD (Clean/Onion)
 |User Interface
 |Application Service
 |Domain
@@ -115,4 +118,5 @@ Rewritten from Layered Architecture Example
 [Notes]
 ====
 * In DDD, everything in a `domain` package, including sub packages, together is a Domain Model. An object like the `Pet` object alone is NOT the Domain Model but a domain object inside a Domain Model
+* DDD, Clean and Onion Architectures are re-discovery of the same idea at different points in time with slightly different preferences
 ====
