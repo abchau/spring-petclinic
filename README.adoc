@@ -60,28 +60,30 @@ a|
 * Service -> Domain
 * Domain -> Dao
 * Domain <- Dao
-|Layered Architecture Example 
+|*Layered Architecture Example*
 
-Rewritten from Orginal to usually how people approach traditional Layered Architecture. This is not the only form of traditional Layered Architecture.
+Rewritten from Orginal to usually how people approach traditional Layered Architecture. 
+
+This is not the only form of traditional Layered Architecture.
 
 |link:spring-petclinic-layered-hex[]
 |Yes
 |Driving -> Application <- Driven
-a|Hexagonal Architecture™ Example
+a|*Hexagonal Architecture™ Example*
 
 Rewritten from Layered Architecture Example
 
 |link:spring-petclinic-layered-ddd[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
-|DDD Architecture™
+|*DDD Architecture™ Example*
 
 Rewritten from Layered Architecture Example 
 
 |link:spring-petclinic-layered-clean[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
-|Clean Architecture™ Example
+|*Clean Architecture™ Example*
 
 Rewritten from Layered Architecture Example.
 
@@ -94,7 +96,7 @@ Please note that this is an example of "Clean Architecture™", not "clean archi
 |link:spring-petclinic-layered-onion[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
-|Onion Architecture™ Example
+|*Onion Architecture™ Example*
 
 Rewritten from Layered Architecture Example 
 
@@ -102,16 +104,18 @@ Rewritten from Layered Architecture Example
 
 == Layering
 
-[cols="1,1,1,1,1,1,1", width="100%", options="header"]
+[cols="1,1,1,1,1,1,1,1", width="100%", options="header"]
 |===
 
 |Type
 4+|Layers
 |Remarks 1
 |Remarts 2
+|Remarts 3
 
 |Original
 4+|Kind of Vertically sliced
+|
 |
 |
 
@@ -122,35 +126,40 @@ Rewritten from Layered Architecture Example
 |Data Access
 |
 |
+.5+| All of these are a form of Layered Architecture
 
 |Hexagonal Architecture™ (Ports and Adapters)
 |Driving
 2+|Application
 |Driven
 |
-.4+|Hexagonal, DDD, Clean and Onion Architectures are re-discovery of the same idea at different points in time in different context
+.4+|Hexagonal, DDD, Clean and Onion Architectures are bascically re-discovery of the same idea at different points in time in different context
+// |
 
 |DDD Architecture™
-|User Interface
-|Application Service
-|Domain
-|Infrastructure
+.3+|User Interface
+.3+|Application Service
+.3+|Domain
+.3+|Infrastructure
 .3+|These 3 are basically identical with different naming preferences
+// |
 // |
 
 |Clean Architecture™
-|User Interface
-|Application Service
-|Domain
-|Infrastructure
+// |User Interface
+// |Application Service
+// |Domain
+// |Infrastructure
+// |
 // |
 // |
 
 |Onion Architecture™
-|User Interface
-|Application Service
-|Domain
-|Infrastructure
+// |User Interface
+// |Application Service
+// |Domain
+// |Infrastructure
+// |
 // |
 // |
 
