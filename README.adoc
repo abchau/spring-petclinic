@@ -37,16 +37,13 @@ Derived from link:https://github.com/spring-projects/spring-petclinic[Spring Pet
 
 == Project Structures
 
-[cols="2,1,2,1,1,1,1,4,1,1", width="100%", options="header"]
+[cols="2,1,1,4", width="100%", options="header"]
 |===
 
 |Project
 |Separation of Concern
 |Dependency
-4+|Layers
 |Summary
-|Remark 1
-|Remark 2
 
 |link:spring-petclinic-org[]
 |No
@@ -54,10 +51,7 @@ a|
 * Presentation -> Model -> Dao
 * Presentation -> Dao
 * Model <- Dao
-4+|Kind of Vertically sliced
 |Original before fork
-|
-|
 
 |link:spring-petclinic-layered[]
 |Some
@@ -66,48 +60,27 @@ a|
 * Service -> Domain
 * Domain -> Dao
 * Domain <- Dao
-|Presentation
-|Service
-|Model
-|Data Access
 |Layered Architecture Example 
 
 Rewritten from Orginal to usually how people approach traditional Layered Architecture. This is not the only form of traditional Layered Architecture.
-|
-|
 
 |link:spring-petclinic-layered-hex[]
 |Yes
 |Driving -> Application <- Driven
-|Driving
-2+|Application
-|Driven
 a|Hexagonal Architecture™ Example
 
 Rewritten from Layered Architecture Example
-|
-.4+|Hexagonal, DDD, Clean and Onion Architectures are re-discovery of the same idea at different points in time in different context
 
 |link:spring-petclinic-layered-ddd[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
-|User Interface
-|Application Service
-|Domain
-|Infrastructure
 |DDD Architecture™
 
 Rewritten from Layered Architecture Example 
-.3+|These 3 are basically identical with different naming preferences
-// |
 
 |link:spring-petclinic-layered-clean[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
-|User Interface
-|Application Service
-|Domain
-|Infrastructure
 |Clean Architecture™ Example
 
 Rewritten from Layered Architecture Example.
@@ -117,87 +90,71 @@ Please note that this is an example of "Clean Architecture™", not "clean archi
 "Clean Architecture™" is the architecture and exmaple deescribed in the book Clean Architecture™. 
 
 "clean architecture" is more like using general English to describe an architecture that anyone can come up with and self-proclaimed as "an architecture that is clean". 
-// |
-// |
 
 |link:spring-petclinic-layered-onion[]
 |Yes
 |User Interface -> [Application -> Domain] <- Infrastructure
+|Onion Architecture™ Example
+
+Rewritten from Layered Architecture Example 
+
+|===
+
+== Layering
+
+[cols="1,1,1,1,1,1,1", width="100%", options="header"]
+|===
+
+|Type
+4+|Layers
+|Remarks 1
+|Remarts 2
+
+|Original
+4+|Kind of Vertically sliced
+|
+|
+
+|Layered Architecture
+|Presentation
+|Service
+|Model
+|Data Access
+|
+|
+
+|Hexagonal Architecture™ (Ports and Adapters)
+|Driving
+2+|Application
+|Driven
+|
+.4+|Hexagonal, DDD, Clean and Onion Architectures are re-discovery of the same idea at different points in time in different context
+
+|DDD Architecture™
 |User Interface
 |Application Service
 |Domain
 |Infrastructure
-|Onion Architecture™ Example
+.3+|These 3 are basically identical with different naming preferences
+// |
 
-Rewritten from Layered Architecture Example 
+|Clean Architecture™
+|User Interface
+|Application Service
+|Domain
+|Infrastructure
 // |
 // |
 
+|Onion Architecture™
+|User Interface
+|Application Service
+|Domain
+|Infrastructure
+// |
+// |
 
 |===
-
-// == Layering
-
-// [cols="1,1,1,1,1,1,1,1", width="100%", options="header"]
-// |===
-
-// |Type
-// 4+|Layers
-// |Remarks 1
-// |Remarks 2
-// |Remarts 3
-
-// |Original
-// 4+|Kind of Vertically sliced
-// |
-// |
-// |
-
-// |Layered Architecture
-// |Presentation
-// |Service
-// |Model
-// |Data Access
-// |
-// |
-// |
-
-// |Hexagonal Architecture™ (Ports and Adapters)
-// |Driving
-// 2+|Application
-// |Driven
-// |
-// |
-// .4+|Hexagonal, DDD, Clean and Onion Architectures are re-discovery of the same idea at different points in time in different context
-
-// |DDD Architecture™
-// |User Interface
-// |Application Service
-// |Domain
-// |Infrastructure
-// |
-// .3+|These 3 are basically identical with different naming preferences
-// // |
-
-// |Clean Architecture™
-// |User Interface
-// |Application Service
-// |Domain
-// |Infrastructure
-// |
-// // |
-// // |
-
-// |Onion Architecture™
-// |User Interface
-// |Application Service
-// |Domain
-// |Infrastructure
-// |
-// // |
-// // |
-
-// |===
 
 
 [Notes]
